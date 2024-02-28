@@ -1,0 +1,91 @@
+:root {
+  --el-border-radius-base: 4px;
+  --el-border-radius-small: 4px;
+  --el-color-primary: #003296;
+  --el-color-primary-dark-2: #002270;
+  --el-color-primary-light-3: #0034b5;
+}
+
+.el-table {
+  --el-table-header-font-color: rgba(0, 0, 0, 0.85);
+  --el-table-border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.el-menu {
+  --el-menu-hover-bg-color: #0034b5;
+}
+.el-menu-item [class^='el-icon'] {
+  margin-right: 5px;
+}
+
+.el-popper {
+  --el-popper-border-radius: 8px;
+}
+.el-popper.is-dark {
+  color: #fff;
+  background: #303133;
+  border: 1px solid #303133;
+}
+
+.el-pagination.is-background .el-pager li {
+  border-radius: 8px;
+}
+.el-pagination.is-background .el-pagination__sizes input {
+  --el-pagination-border-radius: 8px;
+}
+
+.el-popconfirm__main {
+  padding-bottom: 12px;
+  i.el-icon-question {
+    font-size: 18px;
+  }
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 20px;
+  margin-right: 0px;
+}
+.el-dialog__body {
+  padding: 20px;
+}
+
+.el-steps {
+  .el-step__icon {
+    border: 1px solid #cccccd;
+    border-radius: 4px;
+    background-color: #f2f3f5;
+    width: 28px;
+    height: 28px;
+  }
+  .el-step__head.is-finish {
+    .el-step__icon.is-text {
+      background-color: #003296;
+      color: #ffffff;
+    }
+  }
+  .el-step__line {
+    top: 35px !important;
+    left: 13px !important;
+    height: 70%;
+    background-color: #e5e6eb;
+    i {
+      display: none;
+    }
+  }
+  .el-step__title {
+    padding-top: 4px;
+  }
+  .el-step__description {
+    min-height: 24px;
+  }
+}
+.el-steps-second {
+  .el-step__line {
+    height: 18%;
+  }
+}
+
+.el-divider--horizontal {
+  border-top: 1px solid #f2f3f5;
+}
