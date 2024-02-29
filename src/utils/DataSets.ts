@@ -12,7 +12,7 @@ export const activityType: string[] = [];
 
 export const shouldApply: string[] = ['是', '否'];
 
-export const activityStatus: string[] = ['报名未开始', '报名中', '报名截止', '活动中', '活动结束'];
+export const activityStatus: string[] = ['活动未开始', '报名未开始', '报名中', '报名截止', '活动中', '活动结束'];
 
 export const useBudget: string[] = ['是', '否'];
 
