@@ -19,11 +19,11 @@ export interface IPermission {
   router: string
 }
 export interface IUserInfo {
-  userId: number
-  cardId: string
-  name: string
-  permission: IPermission[]
-  role: { id: number; name: string }[]
+  email: string
+  userNumber: string
+  realName: string
+  permissionList: IPermission[]
+  role: { id: number; roleName: string }
 }
 
 export interface ICommonState {

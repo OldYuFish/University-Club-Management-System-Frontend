@@ -4,10 +4,10 @@ export const state: ICommonState = {
   isExpand: true,
   crumbs: [],
   userInfo: {
-    userId: 0,
-    cardId: '',
-    name: '',
-    permission: [],
-    role: [],
+    email: '',
+    userNumber: '',
+    realName: '',
+    permissionList: [],
+    role: { id: 0, roleName: '' },
   },
 }
