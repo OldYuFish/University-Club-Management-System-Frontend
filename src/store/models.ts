@@ -11,12 +11,9 @@ export interface IRootStore {
 }
 
 export interface IPermission {
-  actionId: number
-  menuId: number
-  name: string
-  num: number
-  parentId: number
-  router: string
+  id: number
+  permissionName: string
+  url: string
 }
 export interface IUserInfo {
   email: string

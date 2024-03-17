@@ -1,6 +1,7 @@
 import type { NavigationGuardNext, RouteLocationNormalized, Router } from "vue-router";
-import type { IUserInfo, IPermission } from "@/store/models";
+import type { IUserInfo, IPermission, ICrumb } from "@/store/models";
 import NProgress from "nprogress";
+import store from "@/store";
 
 NProgress.configure({
   showSpinner: false,
@@ -10,14 +11,40 @@ NProgress.configure({
 })
 
 export class useAuthGuard {
-  whiteList: string[] = [];
+  whiteList: string[] = ['Forbidden', 'NotFound', 'login'];
 
   constructor(private router: Router) {
     this.canActivate();
     this.afterEach();
   }
 
-  canActivate() {}
+  canActivate() {
+    this.router.beforeEach(async (to, from, next) => {
+      document.title = to.meta.title as string;
+      NProgress.start();
+      if (to.name === "NotFound") {
+        await store.dispatch('common/getUserInfo');
+        next();
+      } else {
+        this.extractCrumbs(to);
+        if (to.name && this.whiteList.includes(to.name.toString())) {
+          if (['Forbidden', 'NotFound'].includes(to.name as string)) {
+            await store.dispatch('common/getUserInfo');
+          }
+          next();
+        } else {
+          let userInfo: IUserInfo = store.getters['common/userInfo'];
+          if (userInfo.userNumber) {
+            const isAllowed = this.allowRouter(to, userInfo.permissionList);
+            this.validPermission(isAllowed, userInfo, to, next);
+          } else {
+            next('/login');
+          }
+        }
+      }
+    });
+    return this.router;
+  }
 
   afterEach() {
     this.router.afterEach(() => {
@@ -30,21 +57,69 @@ export class useAuthGuard {
       userInfo: IUserInfo,
       to: RouteLocationNormalized,
       next: NavigationGuardNext,
-  ) {}
-
-  private allowRouter(router: RouteLocationNormalized, permission: IPermission[]) {
-    return permission.some((p: IPermission) => {
-      return router.name === p.router;
-    });
+  ) {
+    if (isAllowed) {
+      if (['home', 'center'].includes(to.name.toString())) {
+        next();
+      } else if ((to.name as string).split('-').length > 1) {
+        next();
+      } else {
+        next('/home');
+      }
+    } else {
+      if (to.path === '/') {
+        next('/home');
+      } else {
+        next('/exception/404');
+      }
+    }
   }
 
-  private locationFirst(permission: IPermission[], next: NavigationGuardNext) {
-    permission.some((menu: IPermission) => {
-      if (menu.router.split('-').length > 1) {
-        next({ name: menu.router });
-        return true;
-      }
-      return false;
+  private extractCrumbs(to: RouteLocationNormalized) {
+    let crumbs: ICrumb[] = [];
+    to.matched.forEach((m) => {
+      crumbs.push({
+        path: m.path,
+        title: m.meta.title as string,
+        to: m.meta.to as string || '',
+      });
     });
+    if (crumbs.length < 2) {
+      crumbs = crumbs.map((c) => {
+        c.to = '';
+        return c;
+      });
+    }
+    store.commit('common/setCrumbs', crumbs);
+  }
+
+  private allowRouter(router: RouteLocationNormalized, permission: IPermission[]): boolean {
+    const routeList = router.name.toString().split('-');
+    if (routeList.length === 1) return true;
+    let flag: boolean = false;
+    permission.some((p: IPermission) => {
+      const urlList = p.url.split('/');
+      if (urlList[3] === "research") {
+        if (routeList.length === 2) {
+          if (urlList[2] === routeList[0]) {
+            flag = true;
+            return false;
+          }
+        } else if (routeList.length === 3) {
+          if (urlList[4] === routeList[2]) {
+            flag = true;
+            return false;
+          }
+        }
+      } else if (urlList[3] === "create") {
+        if (routeList.length === 3) {
+          if (routeList[2] === "apply") {
+            flag = true;
+            return false;
+          }
+        }
+      }
+    });
+    return flag;
   }
 }

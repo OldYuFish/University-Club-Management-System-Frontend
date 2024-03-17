@@ -9,10 +9,9 @@ export const mutations: MutationTree<ICommonState> = {
     state.crumbs = crumbs;
   },
   setUserInfo: (state: ICommonState, userInfo: IUserInfo): void => {
-    userInfo.permission = (userInfo.permission || []).concat(
-        { actionId: 0, num: 0, parentId: 0, name: 'center', router: 'center', menuId: -1 },
-        { actionId: 0, num: 0, parentId: 0, name: '403', router: '403', menuId: -1 },
-        { actionId: 0, num: 0, parentId: 0, name: '404', router: '404', menuId: -1 },
+    userInfo.permissionList = (userInfo.permissionList || []).concat(
+        // TODO
+        { id: 39, permissionName: '查询个人信息', url: '/api/user/research/detail' },
     );
     state.userInfo = userInfo;
   },
