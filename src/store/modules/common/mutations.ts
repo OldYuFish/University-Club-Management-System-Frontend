@@ -10,7 +10,6 @@ export const mutations: MutationTree<ICommonState> = {
   },
   setUserInfo: (state: ICommonState, userInfo: IUserInfo): void => {
     userInfo.permissionList = (userInfo.permissionList || []).concat(
-        // TODO
         { id: 39, permissionName: '查询个人信息', url: '/api/user/research/detail' },
     );
     state.userInfo = userInfo;

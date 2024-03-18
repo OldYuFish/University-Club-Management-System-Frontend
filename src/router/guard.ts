@@ -36,7 +36,7 @@ export class useAuthGuard {
           let userInfo: IUserInfo = store.getters['common/userInfo'];
           if (userInfo.userNumber) {
             const isAllowed = this.allowRouter(to, userInfo.permissionList);
-            this.validPermission(isAllowed, userInfo, to, next);
+            this.validPermission(isAllowed, to, next);
           } else {
             next('/login');
           }
@@ -54,7 +54,6 @@ export class useAuthGuard {
 
   private validPermission(
       isAllowed: boolean,
-      userInfo: IUserInfo,
       to: RouteLocationNormalized,
       next: NavigationGuardNext,
   ) {
@@ -96,30 +95,19 @@ export class useAuthGuard {
   private allowRouter(router: RouteLocationNormalized, permission: IPermission[]): boolean {
     const routeList = router.name.toString().split('-');
     if (routeList.length === 1) return true;
-    let flag: boolean = false;
-    permission.some((p: IPermission) => {
+    return permission.some((p: IPermission) => {
       const urlList = p.url.split('/');
       if (urlList[3] === "research") {
         if (routeList.length === 2) {
-          if (urlList[2] === routeList[0]) {
-            flag = true;
-            return false;
-          }
+          return urlList[2] === routeList[0];
         } else if (routeList.length === 3) {
-          if (urlList[4] === routeList[2]) {
-            flag = true;
-            return false;
-          }
+          return urlList[4] === routeList[2];
         }
       } else if (urlList[3] === "create") {
         if (routeList.length === 3) {
-          if (routeList[2] === "apply") {
-            flag = true;
-            return false;
-          }
+          return routeList[2] === "apply";
         }
       }
     });
-    return flag;
   }
 }
