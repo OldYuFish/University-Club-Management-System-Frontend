@@ -34,5 +34,17 @@ export const common = {
     return axios.request({
       url: '/api/user/is-login',
     })
-  }
+  },
+  delete: (params: { email: string }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/user/delete',
+      data: params,
+    })
+  },
+  logout: (params: { email: string }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/user/logout',
+      data: params,
+    })
+  },
 };

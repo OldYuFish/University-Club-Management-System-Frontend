@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import type { IPermission } from "@/store/models";
 import type { IRouterRecord } from "@/models";
-import { ArrowLeft, ArrowRight } from "@element-plus/icons";
+import { ArrowLeft, ArrowRight, House, Star, TrophyBase, Tickets, Edit, User, Notebook } from "@element-plus/icons-vue";
 import store from "@/store";
 
 defineProps({
@@ -126,4 +126,6 @@ const triggerMenuItem = (el: any, menu: IRouterRecord) => {
 };
 
 state.defaultActive = route.meta.relation as string;
+
+if (route.name === 'center') state.defaultActive = '';
 </script>

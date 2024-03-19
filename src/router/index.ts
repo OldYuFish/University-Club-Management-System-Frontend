@@ -9,14 +9,14 @@ const routes: readonly RouteRecordRaw[] = [
     children: [
       {
         path: '/center',
-        name: 'user-center',
-        meta: { key: 'user-center', title: '个人中心', to: '/center' },
+        name: 'center',
+        meta: { key: 'center', title: '个人中心', to: '/center' },
         component: () => import('@/views/common/center/index.vue'),
       },
       {
         path: '/home',
-        name: 'user-home',
-        meta: { key: 'user-home', title: '主页', to: '/home' },
+        name: 'home',
+        meta: { key: 'home', title: '主页', to: '/home' },
         component: () => import('@/views/common/home/index.vue'),
       },
       {

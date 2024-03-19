@@ -9,18 +9,6 @@ export const user = {
       data: params,
     })
   },
-  delete: (params: { email: string }): AxiosPromise<any> => {
-    return axios.request({
-      url: '/api/user/delete',
-      data: params,
-    })
-  },
-  logout: (params: { email: string }): AxiosPromise<any> => {
-    return axios.request({
-      url: '/api/user/logout',
-      data: params,
-    })
-  },
   retrieve: (params: { email: string, password: string, verifyCode: string, connectionId: string }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/user/retrieve',
