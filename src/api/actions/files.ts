@@ -1,5 +1,5 @@
 import type { FileInfo } from "@/models";
-import { AxiosPromise } from "axios";
+import { AxiosPromise, AxiosPromise } from "axios";
 import axios from "@/api/api";
 import {param} from "ts-interface-checker";
 
@@ -24,9 +24,21 @@ export const files = {
       params,
     })
   },
-  researchClub: (params: { id: number }): AxiosPromise<any> => {
+  researchClubImage: (params: { id: number }): AxiosPromise<any> => {
     return axios.request({
-      url: '/api/files/research/club',
+      url: '/api/files/research/club/image',
+      data: params,
+    })
+  },
+  researchClubFile: (params: { id: number }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/files/research/club/file',
+      data: params,
+    })
+  },
+  researchActivity: (params: { id: number }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/files/research/activity',
       data: params,
     })
   },
@@ -38,18 +50,18 @@ export const files = {
       params,
     })
   },
-  researchActivity: (params: { activityId: number }): AxiosPromise<any> => {
-    return axios.request({
-      url: '/api/files/research/activity',
-      method: 'get',
-      responseType: 'blob',
-      params,
-    })
-  },
   researchFund: (params: { id: number }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/files/research/fund',
       data: params,
+    })
+  },
+  picture: (params: { fileName: string }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/files/picture',
+      method: 'get',
+      responseType: 'blob',
+      params,
     })
   },
   download: (params: { fileName: string }): AxiosPromise<any> => {
