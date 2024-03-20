@@ -58,7 +58,7 @@ export class useAuthGuard {
       next: NavigationGuardNext,
   ) {
     if (isAllowed) {
-      if (['home', 'center'].includes(to.name.toString())) {
+      if (['home', 'center'].includes(to.name!.toString())) {
         next();
       } else if ((to.name as string).split('-').length > 1) {
         next();
@@ -68,6 +68,8 @@ export class useAuthGuard {
     } else {
       if (to.path === '/') {
         next('/home');
+      } else if (useRouter().hasRoute(to.path.toString())) {
+        next('/exception/403');
       } else {
         next('/exception/404');
       }
@@ -93,7 +95,7 @@ export class useAuthGuard {
   }
 
   private allowRouter(router: RouteLocationNormalized, permission: IPermission[]): boolean {
-    const routeList = router.name.toString().split('-');
+    const routeList = router.name!.toString().split('-');
     if (routeList.length === 1) return true;
     return permission.some((p: IPermission) => {
       const urlList = p.url.split('/');

@@ -7,8 +7,22 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Aside: typeof import('./components/Layout/Aside.vue')['default']
+    Card: typeof import('./components/Card/index.vue')['default']
+    Crumb: typeof import('./components/Crumb/index.vue')['default']
+    ElCard: typeof import('element-plus/es')['ElCard']
+    ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElHeader: typeof import('element-plus/es')['ElHeader']
+    ElMain: typeof import('element-plus/es')['ElMain']
+    ElRow: typeof import('element-plus/es')['ElRow']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
+    Exception: typeof import('./components/Exception/index.vue')['default']
+    Header: typeof import('./components/Layout/Header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    Layout: typeof import('./components/Layout/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./components/Table/index.vue')['default']
   }
 }

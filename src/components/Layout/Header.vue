@@ -34,7 +34,8 @@
             :icon="SwitchButton"
             size="large"
             circle
-            @click="common.logout({ email: userInfo.email })"
+            plain
+            @click="logout"
         />
       </ElTooltip>
     </ElMenuItem>
@@ -50,10 +51,14 @@ import { SwitchButton } from "@element-plus/icons-vue";
 const router = useRouter();
 const userInfo: IUserInfo = store.getters['common/userInfo'];
 
+const logout = () => {
+  common.logout({ email: userInfo.email });
+};
+
 const avatarUrl = ref("/image/default-avatar.png");
 const getAvatar = async () => {
   const { data } = await files.researchLogin({ email: userInfo.email });
-  avatarUrl.value = URL.createObjectURL(
+  avatarUrl.value = window.URL.createObjectURL(
       new Blob([data], { type: "arraybuffer" })
   );
 };
