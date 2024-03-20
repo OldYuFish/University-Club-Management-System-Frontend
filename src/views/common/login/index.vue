@@ -1,10 +1,13 @@
 <template>
   <div class="common-layout">
     <ElContainer>
-      <ElHeader></ElHeader>
       <ElMain>
         <ElRow justify="center" align="middle">
-          <ElCard style="background-color: rgba(255, 255, 255, 0.8);" shadow="always" :body-style="{ textAlign: 'center' }">
+          <ElCard
+            style="background-color: rgba(255, 255, 255, 0.8);"
+            shadow="always"
+            :body-style="{ textAlign: 'center' }"
+          >
             <template #header>
               <ElRow justify="center">
                 <img src="/image/logo.png" alt="logo">
@@ -18,13 +21,19 @@
             </template>
             <ElTabs v-model="activeName" class="demo-tabs">
               <ElTabPane label="登录 (Login)" name="login">
-                <OFLogin :imageUrl="imageUrl" :getImage="getCaptcha" />
+                <ElScrollbar height="350px" class="w-full">
+                  <OFLogin />
+                </ElScrollbar>
               </ElTabPane>
               <ElTabPane label="注册 (Register)" name="register">
-                <OFRegister :imageUrl="imageUrl" :getImage="getCaptcha" />
+                <ElScrollbar height="350px" class="w-full">
+                  <OFRegister />
+                </ElScrollbar>
               </ElTabPane>
               <ElTabPane label="找回密码 (FindPassword)" name="findPassword">
-                <OFFind :imageUrl="imageUrl" :getImage="getCaptcha" />
+                <ElScrollbar height="350px" class="w-full">
+                  <OFFind />
+                </ElScrollbar>
               </ElTabPane>
             </ElTabs>
           </ElCard>
@@ -35,21 +44,12 @@
 </template>
 
 <script lang="ts" setup>
-import OFLogin from './login.vue';
-import OFRegister from './register.vue';
-import OFFind from './find.vue';
+import OFLogin from "./login.vue";
+import OFRegister from "./register.vue";
+import OFFind from "./find.vue";
 import { common } from "@/api";
 
 const activeName = ref("login");
-const imageUrl = ref("");
-const getCaptcha = async () => {
-  const { data } = await common.captcha({ connectionId: localStorage.getItem("connectionId")! });
-  imageUrl.value = window.URL.createObjectURL(
-      new Blob([data], { type: "arraybuffer" })
-  );
-};
-
-getCaptcha();
 </script>
 
 <style>

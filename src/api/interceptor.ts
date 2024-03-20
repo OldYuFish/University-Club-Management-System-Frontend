@@ -17,14 +17,17 @@ export default class HttpClient {
   }
 
   private mergeConfig(httpOptions: AxiosRequestConfig): AxiosRequestConfig {
-    return Object.assign({
-      baseURL: this.baseUrl,
-      timeout: 20000,
-      headers: {
-        Authorization: localStorage.getItem("token") === "" ? undefined : localStorage.getItem("token"),
-      },
-      httpOptions,
-    });
+    return Object.assign(
+        {
+          baseURL: this.baseUrl,
+          timeout: 20000,
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+          method: 'post',
+        },
+        httpOptions,
+    );
   }
 
   private interceptors(instance: AxiosInstance, url?: string) {

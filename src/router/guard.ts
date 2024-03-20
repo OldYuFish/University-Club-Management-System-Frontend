@@ -2,6 +2,7 @@ import type { NavigationGuardNext, RouteLocationNormalized, Router } from "vue-r
 import type { IUserInfo, IPermission, ICrumb } from "@/store/models";
 import NProgress from "nprogress";
 import store from "@/store";
+import { common } from "@/api";
 
 NProgress.configure({
   showSpinner: false,
@@ -11,7 +12,7 @@ NProgress.configure({
 })
 
 export class useAuthGuard {
-  whiteList: string[] = ['Forbidden', 'NotFound', 'login'];
+  whiteList: string[] = ['Forbidden', 'NotFound'];
 
   constructor(private router: Router) {
     this.canActivate();
@@ -38,7 +39,18 @@ export class useAuthGuard {
             const isAllowed = this.allowRouter(to, userInfo.permissionList);
             this.validPermission(isAllowed, to, next);
           } else {
-            next('/login');
+            if (to.name!.toString() === "login") {
+              const connection = localStorage.getItem("connection");
+              if (!connection) {
+                const { data } = await common.cid({ connectionId: connection ? connection : "" });
+                if (data.code === 0) {
+                  localStorage.setItem("connection", data.data.connectionId);
+                }
+              }
+              next();
+            } else {
+              next('/login');
+            }
           }
         }
       }

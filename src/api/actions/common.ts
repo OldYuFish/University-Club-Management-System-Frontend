@@ -16,7 +16,7 @@ export const common = {
       data: params,
     })
   },
-  cid: (params: { connectionId: number }): AxiosPromise<any> => {
+  cid: (params: { connectionId: string }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/user/cid',
       data: params,

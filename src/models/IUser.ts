@@ -2,6 +2,7 @@ export interface UserInfo {
   id?: number
   realName: string
   password: string
+  repeatPassword?: string
   studentNumber?: string
   teacherNumber?: string
   phone: string
