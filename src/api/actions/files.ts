@@ -1,7 +1,5 @@
-import type { FileInfo } from "@/models";
-import { AxiosPromise, AxiosPromise } from "axios";
+import { AxiosPromise } from "axios";
 import axios from "@/api/api";
-import {param} from "ts-interface-checker";
 
 export const files = {
   create: (params: any): AxiosPromise<any> => {
@@ -19,9 +17,7 @@ export const files = {
   researchLogin: (params: { email: string }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/files/research/login',
-      method: 'get',
-      responseType: 'blob',
-      params,
+      data: params,
     })
   },
   researchClubImage: (params: { id: number }): AxiosPromise<any> => {
@@ -45,9 +41,7 @@ export const files = {
   researchMember: (params: { studentNumber: string }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/files/research/member',
-      method: 'get',
-      responseType: 'blob',
-      params,
+      data: params,
     })
   },
   researchFund: (params: { id: number }): AxiosPromise<any> => {

@@ -10,12 +10,12 @@
             <OFAside :height="height-72" />
           </ElAside>
           <ElScrollbar :style="{ height: `${height-72}px` }" class="w-full">
-            <ElMain>
+            <ElMain class="py-3">
               <OFCrumb />
               <RouterView v-slot="{ Component, route }">
                 <Transition
                   v-if="route.meta.keepAlive"
-                  :name="route.meta.transition.toString() || 'fade'"
+                  :name="route.meta.transition as string || 'fade'"
                   mode="out-in"
                   appear
                 >
@@ -25,7 +25,7 @@
                 </Transition>
                 <Transition
                   v-if="!route.meta.keepAlive"
-                  :name="route.meta.transition.toString() || 'fade'"
+                  :name="route.meta.transition as string || 'fade'"
                   mode="out-in"
                   appear
                 >

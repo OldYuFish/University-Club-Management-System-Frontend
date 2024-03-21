@@ -1,5 +1,5 @@
 <template>
-  <ElBreadcrumb separator="/" class="pb-5">
+  <ElBreadcrumb separator="/" class="pb-3">
     <ElBreadcrumbItem v-for="crumb of store.state.common.crumbs" :to="crumb.to">
       {{ crumb.title }}
     </ElBreadcrumbItem>

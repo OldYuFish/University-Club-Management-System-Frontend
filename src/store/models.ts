@@ -16,6 +16,7 @@ export interface IPermission {
   url: string
 }
 export interface IUserInfo {
+  id: number
   email: string
   userNumber: string
   realName: string

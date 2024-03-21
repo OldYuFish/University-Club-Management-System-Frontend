@@ -66,9 +66,12 @@ const logout = () => {
 const avatarUrl = ref("/image/default-avatar.png");
 const getAvatar = async () => {
   const { data } = await files.researchLogin({ email: userInfo.email });
-  avatarUrl.value = window.URL.createObjectURL(
-      new Blob([data], { type: "arraybuffer" })
-  );
+  if (data.code === 0) {
+    const res = await files.picture({ fileName: data.data.fileName });
+    avatarUrl.value = window.URL.createObjectURL(
+        new Blob([res.data], { type: "arraybuffer" })
+    );
+  }
 };
 
 const openMessageBox = () => {

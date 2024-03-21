@@ -4,6 +4,7 @@ export const state: ICommonState = {
   isExpand: true,
   crumbs: [],
   userInfo: {
+    id: 0,
     email: '',
     userNumber: '',
     realName: '',

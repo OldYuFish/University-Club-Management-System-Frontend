@@ -129,7 +129,7 @@ const state = reactive({
 
 const triggerMenuItem = (el: any, menu: IRouterRecord) => {
   state.defaultActive = menu.id;
-  router.push(menu.path!);
+  router.push({ path: menu.path! });
 };
 
 state.defaultActive = route.meta.relation as string;
