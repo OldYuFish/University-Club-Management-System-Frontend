@@ -63,9 +63,9 @@
 </template>
 
 <script lang="ts" setup>
-import { user, common } from '@/api';
-import type { UserInfo, LoginInfo } from '@/models';
-import { ElMessage, FormInstance, FormRules } from 'element-plus';
+import { user, common } from "@/api";
+import type { UserInfo, LoginInfo } from "@/models";
+import { ElMessage, FormInstance, FormRules } from "element-plus";
 
 const loading = ref(false);
 const router = useRouter();
