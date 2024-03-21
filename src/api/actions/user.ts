@@ -9,7 +9,7 @@ export const user = {
       data: params,
     })
   },
-  retrieve: (params: { email: string, password: string, verifyCode: string, connectionId: string }): AxiosPromise<any> => {
+  retrieve: (params: LoginInfo): AxiosPromise<any> => {
     return axios.request({
       url: '/api/user/retrieve',
       data: params,

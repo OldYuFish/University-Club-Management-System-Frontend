@@ -217,7 +217,8 @@ const submit = () => {
       } as UserInfo;
       const { data } = await user.register(params);
       if (data.code === 0) {
-          ElMessage.success("注册成功！");
+        ElMessage.success("注册成功！");
+        await router.push({ path: "/login" });
       }
       loading.value = false;
     }
