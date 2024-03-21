@@ -2,11 +2,11 @@
   <UseWindowSize v-slot="{ height }">
     <ElConfigProvider :locale="zh">
       <ElContainer :style="{ height: `${height}px` }">
-        <ElHeader class="box-content p-0 h-16 py-1 header">
+        <ElHeader style="background-color: #545c64" class="box-content p-0 header">
           <OFHeader />
         </ElHeader>
-        <ElContainer>
-          <ElAside class="relative w-auto">
+        <ElContainer style="background-color: #f5f5f5">
+          <ElAside style="background-color: #545c64" class="relative w-auto">
             <OFAside :height="height-72" />
           </ElAside>
           <ElScrollbar :style="{ height: `${height-72}px` }" class="w-full">

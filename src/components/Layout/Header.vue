@@ -1,12 +1,17 @@
 <template>
   <ElMenu
+      style="border-color: #545c64"
       backgroundColor="#545c64"
       textColor="#fff"
       activeTextColor="#fff"
+      mode="horizontal"
+      :ellipsis="false"
   >
-    <ElMenuItem index="1">大学社团管理系统</ElMenuItem>
+    <ElMenuItem index="0">
+      <div style="font-weight: bold; font-size: 36px; font-family: STKaiti">大 学 社 团 管 理 系 统</div>
+    </ElMenuItem>
     <div class="flex-grow" />
-    <ElMenuItem index="2">
+    <ElMenuItem index="1">
       <ElTooltip placement="bottom" effect="light">
         <template #content>
           <ElDescriptions title="个人信息" :column="1">
@@ -21,22 +26,25 @@
         <ElAvatar :src="avatarUrl" :size="50" />
       </ElTooltip>
     </ElMenuItem>
-    <ElMenuItem index="3" @click="router.push({ path: '/center' })">
+    <ElMenuItem index="2" @click="router.push({ path: '/center' })">
       <template #title>个人中心</template>
     </ElMenuItem>
-    <ElMenuItem index="4">
+    <ElMenuItem index="3">
       <ElTooltip placement="bottom" effect="light">
         <template #content>
           <span>退出登录</span>
         </template>
         <ElButton
             type="info"
-            :icon="SwitchButton"
             size="large"
             circle
             plain
             @click="logout"
-        />
+        >
+          <ElIcon class="m-0">
+            <SwitchButton />
+          </ElIcon>
+        </ElButton>
       </ElTooltip>
     </ElMenuItem>
   </ElMenu>
