@@ -48,49 +48,49 @@ const router = useRouter();
 const { permissionList } = store.getters['common/userInfo'];
 const menuSource: IRouterRecord[] = [
   {
-    id: '1',
+    id: '0',
     name: 'home',
     title: '系统主页',
     icon: House,
     path: '/home',
   },
   {
-    id: '2',
+    id: '1',
     name: 'club',
     title: '社团管理',
     icon: Star,
     path: '/club/list',
   },
   {
-    id: '3',
+    id: '2',
     name: 'activity',
     title: '活动管理',
     icon: TrophyBase,
     path: '/activity/list',
   },
   {
-    id: '4',
+    id: '3',
     name: 'fund',
     title: '经费管理',
     icon: Tickets,
     path: '/fund/list',
   },
   {
-    id: '5',
+    id: '4',
     name: 'role',
     title: '分组管理',
     icon: Edit,
     path: '/role/list',
   },
   {
-    id: '6',
+    id: '5',
     name: 'user',
     title: '用户管理',
     icon: User,
     path: '/user/list',
   },
   {
-    id: '7',
+    id: '6',
     name: 'log',
     title: '日志管理',
     icon: Notebook,
@@ -101,7 +101,7 @@ const menuSource: IRouterRecord[] = [
 const filterMenu = (tree: IRouterRecord[]): IRouterRecord[] => {
   const treeTemp: IRouterRecord[] = [
     {
-      id: '1',
+      id: '0',
       name: 'home',
       title: '系统主页',
       icon: House,
@@ -123,7 +123,7 @@ const filterMenu = (tree: IRouterRecord[]): IRouterRecord[] => {
 };
 
 const state = reactive({
-  defaultActive: '1',
+  defaultActive: '0',
   menus: filterMenu(menuSource),
 });
 
@@ -132,7 +132,6 @@ const triggerMenuItem = (el: any, menu: IRouterRecord) => {
   router.push({ path: menu.path! });
 };
 
-state.defaultActive = route.meta.relation as string;
-
 if (route.name === 'center') state.defaultActive = '';
+else state.defaultActive = route.meta.relation as string;
 </script>

@@ -56,5 +56,10 @@ export const club = {
       url: '/api/club/research/been-accepted',
       data: params,
     })
+  },
+  count: (): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/club/count',
+    })
   }
 };

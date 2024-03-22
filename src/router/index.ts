@@ -16,7 +16,7 @@ const routes: readonly RouteRecordRaw[] = [
       {
         path: '/home',
         name: 'home',
-        meta: { key: 'home', title: '主页', to: '/home' },
+        meta: { key: 'home', relation: '0', title: '主页', to: '/home' },
         component: () => import('@/views/common/home/index.vue'),
       },
       {
