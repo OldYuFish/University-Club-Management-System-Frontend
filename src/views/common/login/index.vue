@@ -19,7 +19,7 @@
                 <div style="font-size: 18px;">Club Management System</div>
               </ElRow>
             </template>
-            <ElTabs v-model="activeName" class="demo-tabs">
+            <ElTabs v-model="activeName">
               <ElTabPane label="登录 (Login)" name="login">
                 <ElScrollbar height="350px" class="w-full">
                   <OFLogin />

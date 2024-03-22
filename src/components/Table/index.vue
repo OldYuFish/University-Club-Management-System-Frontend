@@ -1,9 +1,47 @@
 <template>
   <div class="gk-table-wrap rounded-b">
     <ElTable :data="data">
-      <template #default>
-        <slot name="tableColumn"></slot>
+      <template #empty>
+        <div>暂时没有数据哦！</div>
       </template>
+      <ElTableColumn v-show="showOperation" fixed="right" label="操作">
+        <template #default="{ row }">
+          <ElPopconfirm
+            title="确定要删除该条目吗？"
+            cancel-button-type="text"
+            @confirm="operate(OptionType.Delete, row)"
+          >
+            <template #reference>
+              <ElButton
+                v-show="showDelete"
+                class="m-1"
+                :icon="Delete"
+                type="info"
+                plain
+                round
+              >删除</ElButton>
+            </template>
+          </ElPopconfirm>
+          <ElButton
+            v-show="showUpdate"
+            class="m-1"
+            :icon="Edit"
+            type="info"
+            plain
+            round
+            @click="operate(OptionType.Update, row)"
+          >编辑</ElButton>
+          <ElButton
+              v-show="showUpdate"
+              class="m-1"
+              :icon="Document"
+              type="info"
+              plain
+              round
+              @click="operate(OptionType.Detail, row)"
+          >详情</ElButton>
+        </template>
+      </ElTableColumn>
     </ElTable>
     <div class="flex justify-end pt-4 pb-3 rounded-b bg-white">
       <ElPagination
@@ -26,9 +64,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Loading } from '@element-plus/icons-vue'
-import type { PropType } from 'vue'
-import { computed } from 'vue'
+import { Delete, Loading, Edit, Document } from "@element-plus/icons-vue";
+import type { PropType } from "vue";
+import { computed } from "vue";
+import { club, activity, fund, role } from "@/api";
+import {ElMessage} from "element-plus";
 
 const props = defineProps({
   loading: {
@@ -51,7 +91,30 @@ const props = defineProps({
       }
     },
   },
+  column: {
+    type: Array as PropType<any[]>,
+    default: () => [],
+  },
+  showOperation: {
+    type: Boolean,
+    default: true,
+  },
+  showDelete: {
+    type: Boolean,
+    default: true,
+  },
+  showUpdate: {
+    type: Boolean,
+    default: true,
+  },
+  showDetail: {
+    type: Boolean,
+    default: true,
+  },
 });
+
+const router = useRouter();
+const route = useRoute();
 
 const emits = defineEmits({
   pageChange: (_pageIndex: number, _pageSize: number) => true,
@@ -65,6 +128,47 @@ const currentChange = (pageIndex: number) => {
 }
 const currentSizeChange = (pageSize: number) => {
   emits('pageChange', 1, pageSize!)
+}
+
+const operate = async (type: OptionType, row: any) => {
+  if (type === OptionType.Delete) {
+    let code: number = -1;
+    const firstName = route.name!.toString().split('-')[0];
+    if (firstName === "club") {
+      const { data } = await club.delete({ id: row.id });
+      code = data.code;
+    } else if (firstName === "activity") {
+      const { data } = await activity.delete({ id: row.id });
+      code = data.code;
+    } else if (firstName === "fund") {
+      const { data } = await fund.delete({ id: row.id });
+      code = data.code;
+    } else if (firstName === "role") {
+      const { data } = await role.deleteRole({ id: row.id });
+      code = data.code;
+    }
+    if (code === 0) {
+      ElMessage.success("删除成功！");
+      props.data.some((value, index) => {
+        if (row.id === value.id) {
+          props.data.splice(index, 1);
+          return true;
+        }
+      });
+    }
+  }
+  if (type === OptionType.Update) {
+    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/list/apply" });
+  }
+  if (type === OptionType.Detail) {
+    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/list/detail/"+row.id.toString() });
+  }
+};
+
+enum OptionType {
+  Delete,
+  Update,
+  Detail,
 }
 </script>
 <style lang="scss" scoped>
