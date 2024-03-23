@@ -356,6 +356,8 @@ const query = async () => {
     clubName: form.clubName,
     type: form.type,
     statusCode: (list2Obj[activeName.value]+3)%4,
+    pageIndex: tabPaneData[list2Obj[activeName.value]].pageConfig.pageIndex,
+    pageSize: tabPaneData[list2Obj[activeName.value]].pageConfig.pageSize,
   };
   if (tabPaneData[list2Obj[activeName.value]].showTab) {
     tabPaneData[list2Obj[activeName.value]].loading = true;
