@@ -50,7 +50,7 @@
         plain
         round
         @click="router.push({ path: '/activity/list/apply' })"
-      >创建社团</ElButton>
+      >创建活动</ElButton>
     </div>
     <ElTabs v-model="activeName">
       <template v-for="tab in tabPaneData">
@@ -315,6 +315,13 @@ watch(
   },
 );
 
+const list2Func = {
+  "beenAccepted": activity.researchBeenAccepted,
+  "notSubmit": activity.researchNotSubmit,
+  "notApproval": activity.researchNotApproval,
+  "beenRejected": activity.researchBeenRejected,
+};
+
 const query = async () => {
   const params: ActivityQuery = {
     title: form.title,
@@ -324,7 +331,7 @@ const query = async () => {
   };
   if (tabPaneData[list2Obj[activeName.value]].showTab) {
     tabPaneData[list2Obj[activeName.value]].loading = true;
-    const { data } = await activity.researchBeenAccepted(params);
+    const { data } = await list2Func[activeName.value](params);
     if (data.code === 0) {
       tabPaneData[list2Obj[activeName.value]].data = data.data.activityList as ActivityQuery[];
       tabPaneData[list2Obj[activeName.value]].pageConfig = data.data.pagination as IPagination;
