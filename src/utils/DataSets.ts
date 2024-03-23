@@ -77,7 +77,24 @@ export const activityStatus: string[] = [];
 
 export const useBudget: string[] = [];
 
-export const fundType: string[] = [];
+export const fundType = [
+  {
+    label: "基础经费",
+    value: "basic",
+  },
+  {
+    label: "活动经费",
+    value: "activity",
+  },
+  {
+    label: "竞赛奖金",
+    value: "competition",
+  },
+  {
+    label: "其他",
+    value: "others",
+  },
+];
 
 export const fundStatus: string[] = [];
 
