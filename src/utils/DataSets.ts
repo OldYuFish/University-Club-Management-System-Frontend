@@ -40,8 +40,6 @@ export const clubLevel = [
   },
 ];
 
-export const clubStatus: string[] = [];
-
 export const memberJob: string[] = [];
 
 export const activityType = [
@@ -95,8 +93,6 @@ export const fundType = [
     value: "others",
   },
 ];
-
-export const fundStatus: string[] = [];
 
 export const competitionType: string[] = [];
 

@@ -29,6 +29,15 @@ export interface UserQuery {
   pageSize?: number
 }
 
+export interface UserTable {
+  realName: string
+  userNumber: string
+  phone: string
+  email: string
+  isDelete: number
+  roleName: string
+}
+
 export interface LoginInfo {
   phone?: string
   email?: string
