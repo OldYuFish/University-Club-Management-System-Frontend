@@ -8,7 +8,32 @@ export const clubStatus: string[] = [];
 
 export const memberJob: string[] = [];
 
-export const activityType: string[] = [];
+export const activityType = [
+  {
+    label: "讲座",
+    value: "lecture",
+  },
+  {
+    label: "竞赛",
+    value: "competition",
+  },
+  {
+    label: "会议",
+    value: "meeting",
+  },
+  {
+    label: "公益",
+    value: "commonweal",
+  },
+  {
+    label: "文娱",
+    value: "entertainment",
+  },
+  {
+    label: "其他",
+    value: "others",
+  },
+];
 
 export const shouldApply: string[] = [];
 

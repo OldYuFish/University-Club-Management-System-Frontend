@@ -4,7 +4,16 @@
       <template #empty>
         <div>暂时没有数据哦！</div>
       </template>
-      <ElTableColumn v-show="showOperation" fixed="right" label="操作">
+      <template v-for="col in column">
+        <ElTableColumn
+          :type="col.type"
+          :label="col.label"
+          :prop="col.prop"
+          :sortable="col.sortable"
+          :fixed="col.fixed"
+        />
+      </template>
+      <ElTableColumn v-if="showOperation" fixed="right" label="操作">
         <template #default="{ row }">
           <ElPopconfirm
             title="确定要删除该条目吗？"
@@ -13,7 +22,7 @@
           >
             <template #reference>
               <ElButton
-                v-show="showDelete"
+                v-if="showDelete"
                 class="m-1"
                 :icon="Delete"
                 type="info"
@@ -23,7 +32,7 @@
             </template>
           </ElPopconfirm>
           <ElButton
-            v-show="showUpdate"
+            v-if="showUpdate"
             class="m-1"
             :icon="Edit"
             type="info"
@@ -32,7 +41,7 @@
             @click="operate(OptionType.Update, row)"
           >编辑</ElButton>
           <ElButton
-              v-show="showUpdate"
+              v-if="showUpdate"
               class="m-1"
               :icon="Document"
               type="info"
@@ -69,6 +78,7 @@ import type { PropType } from "vue";
 import { computed } from "vue";
 import { club, activity, fund, role } from "@/api";
 import {ElMessage} from "element-plus";
+import type { IColumn } from "@/models/ITable";
 
 const props = defineProps({
   loading: {
@@ -92,7 +102,7 @@ const props = defineProps({
     },
   },
   column: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<IColumn[]>,
     default: () => [],
   },
   showOperation: {
