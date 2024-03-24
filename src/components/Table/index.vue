@@ -13,12 +13,12 @@
           :fixed="col.fixed"
         />
       </template>
-      <ElTableColumn v-if="showOperation" fixed="right" label="操作">
-        <template #default="{ row }">
+      <ElTableColumn v-if="showOperation" align="right" fixed="right" label="操作">
+        <template #default="{ $index, row }">
           <ElPopconfirm
             title="确定要删除该条目吗？"
             cancel-button-type="text"
-            @confirm="operate(OptionType.Delete, row)"
+            @confirm="operate(OptionType.Delete, row, $index)"
           >
             <template #reference>
               <ElButton
@@ -41,28 +41,28 @@
             @click="operate(OptionType.Update, row)"
           >编辑</ElButton>
           <ElButton
-              v-if="showUpdate"
-              class="m-1"
-              :icon="Document"
-              type="info"
-              plain
-              round
-              @click="operate(OptionType.Detail, row)"
+            v-if="showUpdate"
+            class="m-1"
+            :icon="Document"
+            type="info"
+            plain
+            round
+            @click="operate(OptionType.Detail, row)"
           >详情</ElButton>
         </template>
       </ElTableColumn>
     </ElTable>
     <div class="flex justify-end pt-4 pb-3 rounded-b bg-white">
       <ElPagination
-          v-model:currentPage="pageCfg.pageIndex"
-          v-model:pageSize="pageCfg.pageSize"
-          background
-          layout="total, prev, pager, next, sizes, jumper"
-          :pageSizes="[10, 20, 30, 50, 70, 100, 150, 200, 300, 500, 1000]"
-          :total="pageCfg.total"
-          :hideOnSinglePage="true"
-          @currentChange="currentChange"
-          @sizeChange="currentSizeChange"
+        v-model:currentPage="pageCfg.pageIndex"
+        v-model:pageSize="pageCfg.pageSize"
+        background
+        layout="total, prev, pager, next, sizes, jumper"
+        :pageSizes="[10, 20, 30, 50, 70, 100, 150, 200, 300, 500, 1000]"
+        :total="pageCfg.total"
+        :hideOnSinglePage="true"
+        @currentChange="currentChange"
+        @sizeChange="currentSizeChange"
       ></ElPagination>
     </div>
     <div v-if="loading" class="absolute left-0 top-0 w-full h-full bg-gray-300 bg-opacity-30 z-10">
@@ -75,9 +75,8 @@
 <script lang="ts" setup>
 import { Delete, Loading, Edit, Document } from "@element-plus/icons-vue";
 import type { PropType } from "vue";
-import { computed } from "vue";
 import { club, activity, fund, role } from "@/api";
-import {ElMessage} from "element-plus";
+import { ElMessage } from "element-plus";
 import type { IColumn } from "@/models/ITable";
 
 const props = defineProps({
@@ -140,7 +139,7 @@ const currentSizeChange = (pageSize: number) => {
   emits('pageChange', 1, pageSize!)
 }
 
-const operate = async (type: OptionType, row: any) => {
+const operate = async (type: OptionType, row: any, index?: number) => {
   if (type === OptionType.Delete) {
     let code: number = -1;
     const firstName = route.name!.toString().split('-')[0];
@@ -159,12 +158,7 @@ const operate = async (type: OptionType, row: any) => {
     }
     if (code === 0) {
       ElMessage.success("删除成功！");
-      props.data.some((value, index) => {
-        if (row.id === value.id) {
-          props.data.splice(index, 1);
-          return true;
-        }
-      });
+      props.data.splice(index!, 1);
     }
   }
   if (type === OptionType.Update) {

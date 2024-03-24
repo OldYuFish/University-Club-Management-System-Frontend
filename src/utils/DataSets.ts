@@ -71,10 +71,6 @@ export const activityType = [
 
 export const shouldApply: string[] = [];
 
-export const activityStatus: string[] = [];
-
-export const useBudget: string[] = [];
-
 export const fundType = [
   {
     label: "基础经费",

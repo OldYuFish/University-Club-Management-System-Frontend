@@ -12,7 +12,7 @@ NProgress.configure({
 })
 
 export class useAuthGuard {
-  whiteList: string[] = ['Forbidden', 'NotFound', 'user-list'];
+  whiteList: string[] = ['Forbidden', 'NotFound', 'role-list'];
 
   constructor(private router: Router) {
     this.canActivate();
