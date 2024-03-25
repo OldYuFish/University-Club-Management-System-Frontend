@@ -13,8 +13,8 @@ export interface RoleQuery {
 
 export interface PermissionInfo {
   id?: number
-  permissionName: string
-  url: string
+  permissionName?: string
+  url?: string
 }
 
 export interface RolePermission {

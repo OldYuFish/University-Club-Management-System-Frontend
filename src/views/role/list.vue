@@ -40,7 +40,7 @@
               @click="operate(OptionType.Edit, row)"
             >编辑</ElButton>
             <ElButton
-              v-if="permissionList.includes('/api/role/update/permission')"
+              v-if="permissionList.includes('/api/role/research/permission')"
               class="m-1"
               :icon="Setting"
               type="info"
@@ -68,12 +68,26 @@
         </ElIcon>
       </div>
     </div>
-    <OFEdit v-model:visible="dialogState.visible" :data="dialogState.data" @change="editResult" />
+    <OFEdit
+      v-if="permissionList.includes('/api/role/update/role') || permissionList.includes('/api/role/create')"
+      v-model:visible="dialogState.visible"
+      :data="dialogState.data"
+      @change="editResult"
+    />
+    <OFPermission
+      v-if="permissionList.includes('/api/role/research/permission')"
+      v-model:showDrawer="drawerState.showDrawer"
+      :defaultCheckedKeys="drawerState.defaultCheckedKeys"
+      :updatePermission="updatePermission"
+      :roleId="drawerState.roleId"
+      @change="drawerResult"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 import store from "@/store";
 import OFEdit from "./edit.vue";
+import OFPermission from "./permission.vue";
 import type { IPermission } from "@/store/models";
 import type { RoleQuery, RoleInfo } from "@/models";
 import { role } from "@/api";
@@ -83,6 +97,14 @@ import { ElMessageBox, ElMessage } from "element-plus";
 const permissionList = ref<string[]>([]);
 store.getters['common/userInfo'].permissionList.forEach((permission: IPermission) => {
   permissionList.value.push(permission.url);
+});
+
+const updatePermission = ref(permissionList.value.includes("/api/role/update/Permission"));
+
+const drawerState = reactive({
+  showDrawer: false,
+  defaultCheckedKeys: [] as number[],
+  roleId: 0,
 });
 
 const roleName = ref("");
@@ -188,11 +210,27 @@ const operate = async (type: OptionType, row: RoleInfo, index?: number) => {
       });
     });
   }
+  if (type === OptionType.Permission) {
+    drawerState.showDrawer = true;
+    const { data } = await role.researchPermission({ id: row.id! });
+    if (data.code === 0) {
+      data.data.permissionList.forEach((value: IPermission) => {
+        if (value.id >= 7 && value.id <= 44) {
+          drawerState.defaultCheckedKeys.push(value.id);
+        }
+      });
+      drawerState.roleId = row.id!;
+    }
+  }
 };
 
 const editResult = () => {
   dialogState.visible = false;
   query();
+};
+
+const drawerResult = () => {
+  drawerState.showDrawer = false;
 };
 
 const query = async () => {
