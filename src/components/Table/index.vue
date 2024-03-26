@@ -49,6 +49,7 @@
             round
             @click="operate(OptionType.Detail, row)"
           >详情</ElButton>
+          <slot name="customButton" :id="row.id"></slot>
         </template>
       </ElTableColumn>
     </ElTable>

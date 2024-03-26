@@ -14,12 +14,12 @@
           <ElDescriptions :column="2" :title="preData.clubName">
             <template #extra>
               <ElButton
-                  v-if="permissionList.includes('/api/club/update')"
-                  :icon="Edit"
-                  type="info"
-                  plain
-                  round
-                  @click="router.push({ path: '/club/list/apply' })"
+                v-if="permissionList.includes('/api/club/update')"
+                :icon="Edit"
+                type="info"
+                plain
+                round
+                @click="router.push({ path: '/club/list/apply' })"
               >编辑</ElButton>
             </template>
             <template v-for="item in data">

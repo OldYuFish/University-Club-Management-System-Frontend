@@ -85,15 +85,9 @@ const routes: readonly RouteRecordRaw[] = [
             component: () => import('@/views/fund/list.vue'),
             children: [
               {
-                path: 'detail/:id',
-                name: 'fund-list-detail',
-                meta: { key: 'fund-list-detail', relation: '311', title: '经费详情', to: '' },
-                component: () => import('@/views/fund/detail.vue'),
-              },
-              {
                 path: 'apply',
                 name: 'fund-list-apply',
-                meta: { key: 'fund-list-apply', relation: '312', title: '经费申请', to: '/fund/list/apply' },
+                meta: { key: 'fund-list-apply', relation: '311', title: '经费申请', to: '/fund/list/apply' },
                 component: () => import('@/views/fund/apply.vue'),
               },
             ],

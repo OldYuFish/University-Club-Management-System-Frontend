@@ -56,26 +56,45 @@
       <template v-for="tab in tabPaneData">
         <ElTabPane v-if="tab.showTab" :label="tab.tabLabel" :name="tab.tabName">
           <OFTable
-              :loading="tab.loading"
-              :data="tab.data"
-              :pageConfig="tab.pageConfig"
-              :column="tab.column"
-              :showOperation="tab.showDelete || tab.showUpdate || tab.showDetail"
-              :showDelete="tab.showDelete"
-              :showUpdate="tab.showUpdate"
-              :showDetail="tab.showDetail"
-              @pageChange="pageChange"
-          />
+            :loading="tab.loading"
+            :data="tab.data"
+            :pageConfig="tab.pageConfig"
+            :column="tab.column"
+            :showOperation="tab.showDelete || tab.showUpdate || tab.showDetail"
+            :showDelete="tab.showDelete"
+            :showUpdate="tab.showUpdate"
+            :showDetail="false"
+            @pageChange="pageChange"
+          >
+            <template #customButton="{ id }">
+              <ElButton
+                v-if="permissionList.includes('/api/fund/research/detail')"
+                class="m-1"
+                :icon="Document"
+                type="info"
+                plain
+                round
+                @click="showDetail(id)"
+              >详情</ElButton>
+            </template>
+          </OFTable>
         </ElTabPane>
       </template>
     </ElTabs>
+    <OFDetail
+      v-if="permissionList.includes('/api/fund/research/detail')"
+      v-model:visible="dialogState.visible"
+      :detailId="dialogState.id"
+      @change="detailResult"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 import store from "@/store";
 import type { IPermission } from "@/store/models";
-import { FolderDelete, Plus, Search } from "@element-plus/icons-vue";
+import { Document, FolderDelete, Plus, Search } from "@element-plus/icons-vue";
 import OFTable from "@/components/Table/index.vue";
+import OFDetail from "./detail.vue";
 import type { ITable } from "@/models/ITable";
 import type { FundQuery } from "@/models";
 import { fund } from "@/api";
@@ -106,6 +125,20 @@ const clear = () => {
   form.theme = "";
   form.clubName = "";
   form.type = "";
+};
+
+const dialogState = reactive({
+  visible: false,
+  id: 0,
+});
+
+const showDetail = (id: number) => {
+  dialogState.id = id;
+  dialogState.visible = true;
+};
+
+const detailResult = () => {
+  dialogState.visible = false;
 };
 
 const tabPaneData = reactive([
