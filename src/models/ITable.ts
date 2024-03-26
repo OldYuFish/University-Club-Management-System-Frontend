@@ -18,3 +18,8 @@ export interface ITable {
   showUpdate: boolean
   showDetail: boolean
 }
+
+export interface ICardData {
+  name: string,
+  value: string | number,
+}

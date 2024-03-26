@@ -68,9 +68,11 @@ const getAvatar = async () => {
   const { data } = await files.researchLogin({ email: userInfo.email });
   if (data.code === 0) {
     const res = await files.picture({ fileName: data.data.fileName });
-    avatarUrl.value = window.URL.createObjectURL(
-        new Blob([res.data], { type: "arraybuffer" })
-    );
+    if (res.data.code === 0) {
+      avatarUrl.value = window.URL.createObjectURL(
+          new Blob([res.data], { type: "arraybuffer" })
+      );
+    }
   }
 };
 

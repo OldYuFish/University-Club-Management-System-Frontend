@@ -1,10 +1,10 @@
 <template>
   <ElCard>
-    <img :src="props.image" class="image" alt="nothing interesting" />
-    <ElDescriptions :title="props.title" :column="2">
+    <img :src="image" class="image" alt="nothing interesting" />
+    <ElDescriptions :title="title" :column="2">
       <template #extra>
         <ElButton
-            v-show="props.detail"
+            v-if="detail"
             :icon="Document"
             type="info"
             plain
@@ -12,7 +12,7 @@
             @click="props.research"
         >查看</ElButton>
         <ElButton
-            v-show="props.edit"
+            v-if="edit"
             :icon="Edit"
             type="info"
             plain
@@ -20,7 +20,7 @@
             @click="props.update"
         >编辑</ElButton>
         <ElButton
-            v-show="props.remove"
+            v-if="remove"
             :icon="Delete"
             type="info"
             plain
@@ -28,8 +28,8 @@
             @click="props.delete"
         >删除</ElButton>
       </template>
-      <template v-for="( value, key) in props.data">
-        <ElDescriptionsItem :label="key+'：'">{{ value }}</ElDescriptionsItem>
+      <template v-for="( value, key ) in data">
+        <ElDescriptionsItem v-if="value !== ''" :label="key+'：'">{{ value }}</ElDescriptionsItem>
       </template>
     </ElDescriptions>
   </ElCard>

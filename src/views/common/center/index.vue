@@ -146,9 +146,11 @@ const getAvatar = async () => {
   if (data.code === 0) {
     avatarName.value = data.data.fileName;
     const res = await files.picture({ fileName: avatarName.value });
-    avatarUrl.value = window.URL.createObjectURL(
-        new Blob([res.data], { type: "arraybuffer" })
-    );
+    if (res.data.code === 0) {
+      avatarUrl.value = window.URL.createObjectURL(
+          new Blob([res.data], { type: "arraybuffer" })
+      );
+    }
   }
 };
 

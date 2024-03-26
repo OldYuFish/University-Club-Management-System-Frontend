@@ -40,17 +40,23 @@
         placeholder="请输入验证码VerifyCode"
         @keyup.enter="submit"
       />
-      <template v-if="countDown">
-        <ElButton style="border: 2px solid" type="info" plain round @click="getVerify">验证码</ElButton>
-      </template>
-      <template v-else>
-        <ElCountdown
-            :value="timeout"
-            format="ss"
-            suffix="s后重试"
-            @finish="finish"
-        />
-      </template>
+        <ElButton :disabled="!countDown" style="border: 2px solid" type="info" plain round @click="getVerify">
+          <template v-if="countDown">
+            验证码
+          </template>
+          <template v-else>
+            <ElCountdown
+                :value="timeout"
+                format="ss"
+                @finish="finish"
+                valueStyle="font-size: 16px"
+            >
+              <template #suffix>
+                <ElText>s后重试</ElText>
+              </template>
+            </ElCountdown>
+          </template>
+        </ElButton>
     </ElFormItem>
     <ElRow justify="center">
       <ElFormItem>
