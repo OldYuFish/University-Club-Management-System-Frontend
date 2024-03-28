@@ -39,7 +39,7 @@
             plain
             round
             @click="operate(OptionType.Update, row)"
-          >编辑</ElButton>
+          >{{ row.statusCode === 1 ? "审批" : "编辑" }}</ElButton>
           <ElButton
             v-if="showUpdate"
             class="m-1"
@@ -48,7 +48,7 @@
             plain
             round
             @click="operate(OptionType.Detail, row)"
-          >详情</ElButton>
+          >{{ row.statusCode === 3 ? "详情" : "预览" }}</ElButton>
           <slot name="customButton" :id="row.id"></slot>
         </template>
       </ElTableColumn>
@@ -163,10 +163,10 @@ const operate = async (type: OptionType, row: any, index?: number) => {
     }
   }
   if (type === OptionType.Update) {
-    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/list/apply" });
+    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/apply/" + row.id.toString() });
   }
   if (type === OptionType.Detail) {
-    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/list/detail/"+row.id.toString() });
+    await router.push({ path: "/"+route.name!.toString().split('-')[0]+"/detail/"+row.id.toString() });
   }
 };
 

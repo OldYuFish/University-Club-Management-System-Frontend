@@ -22,3 +22,5 @@ export const tinymceConfig = {
     nonbreaking_force_tab: true,
   },
 };
+
+export const apiKey: string = "hwoqxz1y2kosc1ai6xmjs8h3zm6f7agsps1ss9cw2hmb1rcg";

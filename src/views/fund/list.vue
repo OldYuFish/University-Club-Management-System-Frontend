@@ -49,7 +49,7 @@
           type="info"
           plain
           round
-          @click="router.push({ path: '/fund/list/apply' })"
+          @click="router.push({ path: '/fund/apply/0' })"
       >创建经费</ElButton>
     </div>
     <ElTabs v-model="activeName">

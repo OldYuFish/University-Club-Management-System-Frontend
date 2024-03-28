@@ -78,7 +78,7 @@ const openModel = async () => {
       descData.value = [
         {
           name: "竞赛名称",
-          value: detailData.competitionBonus!.competitionName;
+          value: detailData.competitionBonus!.competitionName,
         },
         {
           name: "竞赛类型",

@@ -89,13 +89,30 @@ export class useAuthGuard {
   }
 
   private extractCrumbs(to: RouteLocationNormalized) {
+    const routeName = to.name!.toString().split('-');
+    const reflect = {
+      club: "社团",
+      activity: "活动",
+      fund: "经费",
+    };
     let crumbs: ICrumb[] = [];
+    if (routeName.length === 2) {
+      if (["detail", "apply"].includes(routeName[1])) {
+        crumbs.push({
+          path: "list",
+          title: `${reflect[routeName[0]]}列表`,
+          to: `/${routeName[0]}/list`,
+        });
+      }
+    }
     to.matched.forEach((m) => {
-      crumbs.push({
-        path: m.path,
-        title: m.meta.title as string,
-        to: m.meta.to as string || '',
-      });
+      if (m.meta.title) {
+        crumbs.push({
+          path: m.path,
+          title: m.meta.title as string,
+          to: m.meta.to as string || '',
+        });
+      }
     });
     if (crumbs.length < 2) {
       crumbs = crumbs.map((c) => {
@@ -111,17 +128,16 @@ export class useAuthGuard {
     if (routeList.length === 1) return true;
     return permission.some((p: IPermission) => {
       const urlList = p.url.split('/');
-      if (urlList[3] === "research") {
-        if (routeList.length === 2) {
-          return urlList[2] === routeList[0];
-        } else if (routeList.length === 3) {
-          return urlList[4] === routeList[2];
-        }
-      } else if (urlList[3] === "create") {
-        if (routeList.length === 3) {
-          return routeList[2] === "apply";
+      if (urlList[2] === routeList[0]) {
+        if (routeList[1] === "list") {
+          return urlList[3] === "research";
+        } else if (routeList[1] === "detail") {
+          return urlList[4] === "detail";
+        } else if (routeList[1] === "apply") {
+          return ["create", "update", "approval"].includes(urlList[3]);
         }
       }
+      return false;
     });
   }
 }

@@ -15,7 +15,7 @@ export interface ActivityInfo {
   summarize?: string
   statusCode: number
   approvalComment?: string
-  clubId: number
+  clubId?: number
   clubName?: string
 }
 

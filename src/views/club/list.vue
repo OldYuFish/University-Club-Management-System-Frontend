@@ -59,7 +59,7 @@
           type="info"
           plain
           round
-          @click="router.push({ path: '/club/list/apply' })"
+          @click="router.push({ path: '/club/apply/0' })"
       >创建社团</ElButton>
     </div>
     <ElTabs v-model="activeName">

@@ -19,7 +19,7 @@
                 type="info"
                 plain
                 round
-                @click="router.push({ path: '/club/list/apply' })"
+                @click="router.push({ path: `/club/apply/${route.params.id}` })"
               >编辑</ElButton>
             </template>
             <template v-for="item in data">

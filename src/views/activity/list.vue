@@ -49,7 +49,7 @@
         type="info"
         plain
         round
-        @click="router.push({ path: '/activity/list/apply' })"
+        @click="router.push({ path: '/activity/apply/0' })"
       >创建活动</ElButton>
     </div>
     <ElTabs v-model="activeName">
