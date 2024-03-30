@@ -19,24 +19,12 @@ export const clubType =[
 
 export const clubLevel = [
   {
-    label: "一星",
-    value: "Lv.one",
+    label: "院级",
+    value: "院级",
   },
   {
-    label: "二星",
-    value: "Lv.two",
-  },
-  {
-    label: "三星",
-    value: "Lv.three",
-  },
-  {
-    label: "四星",
-    value: "Lv.four",
-  },
-  {
-    label: "五星",
-    value: "Lv.five",
+    label: "校级",
+    value: "校级",
   },
 ];
 
@@ -95,3 +83,11 @@ export const competitionType: string[] = [];
 export const competitionLevel: string[] = [];
 
 export const award: string[] = [];
+
+export const text: string = "请依照武汉科技大学社团创办申请准则，准备好相关附件，并通过下方按钮上传至系统！" + "<br />" +
+    "<div style='color: red; font-size: large; font-weight: bold'>注意！！！</div>" +
+    "上传前务必核查文件参数符合系统规范。文件参数规范如下：" + "<br />" +
+    "1> 请保证任一文件扩展名属于以下范畴" +
+    "<div style='color: green; font-size: 20px; margin-left: 2em'>.pdf, .doc, .docx, .xls, .xlsx</div>" +
+    "2> 请保证任一文件大小不超过" + "<span style='color: blue; font-size: 18px'>5MB</span>" + "<br />" +
+    "3> 请保证任一文件名称（包括扩展名）长度不超过" + "<span style='color: orange; font-size: 18px; font-weight: bold'>22</span>" + "个字符";

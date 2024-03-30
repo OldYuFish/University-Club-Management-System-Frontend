@@ -368,6 +368,7 @@ const query = async () => {
     type: form.type,
     clubLevel: form.clubLevel,
     department: form.department,
+    loginId: [1, 3].includes(list2Obj[activeName.value]) ? store.getters['common/userInfo'].id : undefined,
     statusCode: (list2Obj[activeName.value]+3)%4,
     pageIndex: tabPaneData[list2Obj[activeName.value]].pageConfig.pageIndex,
     pageSize: tabPaneData[list2Obj[activeName.value]].pageConfig.pageSize,

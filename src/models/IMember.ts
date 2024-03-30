@@ -6,6 +6,5 @@ export interface MemberInfo {
   studentNumber: string
   email?: string
   honor?: string
-  description?: string
   clubId: number
 }

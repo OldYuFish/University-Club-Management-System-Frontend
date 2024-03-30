@@ -35,9 +35,11 @@
               <div v-html="description" />
             </ElTabPane>
             <ElTabPane label="核心成员">
-              <template v-for="data in cardDataList">
-                <OFCard :image="data[0].name" :title="data[1].name" :data="data" />
-              </template>
+              <ElRow>
+                <template v-for="data in cardDataList">
+                  <OFCard :image="data[0].name" :title="data[1].name" :data="data" />
+                </template>
+              </ElRow>
             </ElTabPane>
           </ElScrollbar>
         </ElCard>
@@ -145,7 +147,7 @@ const getDetail = async () => {
     preData.realName = clubInfo.realName!;
     preData.studentNumber = clubInfo.studentNumber!;
     preData.email = clubInfo.email!;
-    preData.membersNumber = clubInfo.memberNumber ? clubInfo.memberNumber.toString() : "--";
+    preData.membersNumber = clubInfo.membersNumber ? clubInfo.membersNumber.toString() : "--";
     preData.type = clubInfo.type;
     preData.clubLevel = clubInfo.clubLevel!;
     preData.department = clubInfo.department!;
@@ -198,10 +200,6 @@ const getMember = async () => {
         {
           name: "荣誉",
           value: value.honor,
-        },
-        {
-          name: "简介",
-          value: value.description,
         },
       ];
       cardDataList.value.push(memberDetail);

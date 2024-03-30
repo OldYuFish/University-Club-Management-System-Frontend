@@ -12,12 +12,12 @@
               <ElRow>
                 <ElAvatar class="mr-4" :src="avatarUrl" :size="60" />
                 <input
-                    id="uploadAvatar"
-                    type="file"
-                    name="file"
-                    @change="changeAvatar($event)"
-                    style="display: none"
-                    :multiple="false"
+                  id="uploadAvatar"
+                  type="file"
+                  name="file"
+                  @change="changeAvatar($event)"
+                  style="display: none"
+                  :multiple="false"
                 />
                 <ElTooltip effect="light" placement="right">
                   <template #content>
@@ -25,12 +25,12 @@
                     <div style="color: #545c64">并保证文件名不超过18个字符</div>
                   </template>
                   <ElButton
-                      class="mt-6"
-                      :icon="Upload"
-                      type="info"
-                      plain
-                      round
-                      @click="clickFileInput"
+                    class="mt-6"
+                    :icon="Upload"
+                    type="info"
+                    plain
+                    round
+                    @click="clickFileInput"
                   >上传头像</ElButton>
                 </ElTooltip>
               </ElRow>

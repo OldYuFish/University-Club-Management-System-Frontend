@@ -13,6 +13,7 @@ export interface ActivityInfo {
   realNumber?: number
   description?: string
   summarize?: string
+  applicant?: number
   statusCode: number
   approvalComment?: string
   clubId?: number
@@ -24,6 +25,7 @@ export interface ActivityQuery {
   title: string
   type: string
   numberLimit?: number
+  applicant?: number
   statusCode: number
   clubName: string
   pageIndex?: number

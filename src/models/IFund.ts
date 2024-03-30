@@ -6,6 +6,7 @@ export interface FundInfo {
   surplus: number
   appropriationTime: string
   statusCode: number
+  applicant?: number
   approvalComment?: string
   clubId: number
   competitionId?: number
@@ -22,6 +23,7 @@ export interface FundQuery {
   amount?: number
   surplus?: number
   statusCode: number
+  applicant?: number
   clubName: string
   pageIndex?: number
   pageSize?: number

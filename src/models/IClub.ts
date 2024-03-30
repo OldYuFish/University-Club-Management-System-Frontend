@@ -1,14 +1,13 @@
 export interface ClubInfo {
   id?: number
   clubName: string
-  memberNumber: number
+  membersNumber: number
   type: string
   clubLevel?: string
   department?: string
   totalFund?: number
   surplusFund?: number
   description?: string
-  applicationTime: string
   establishmentTime?: string
   statusCode?: number
   approvalComment?: string
@@ -25,6 +24,7 @@ export interface ClubQuery {
   clubLevel: string
   department: string
   statusCode: number
+  loginId?: number
   realName?: string
   pageIndex?: number
   pageSize?: number

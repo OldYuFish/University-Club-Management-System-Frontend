@@ -35,11 +35,11 @@
           <span>退出登录</span>
         </template>
         <ElButton
-            type="info"
-            size="large"
-            circle
-            plain
-            @click="logout"
+          type="info"
+          size="large"
+          circle
+          plain
+          @click="logout"
         >
           <ElIcon class="m-0">
             <SwitchButton />

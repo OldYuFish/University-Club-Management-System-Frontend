@@ -204,7 +204,8 @@ const route = useRoute();
 const router = useRouter();
 
 const permissionList = ref<string[]>([]);
-store.getters['common/userInfo'].permissionList.forEach((permission: IPermission) => {
+const userInfo = store.getters['common/userInfo'];
+userInfo.permissionList.forEach((permission: IPermission) => {
   permissionList.value.push(permission.url);
 });
 
@@ -225,6 +226,7 @@ const form = reactive({
   realNumber: 0,
   description: "",
   summarize: "",
+  applicant: userInfo.id,
   statusCode: 0,
   approvalComment: "",
   clubId: 0,
@@ -306,6 +308,7 @@ const save = () =>{
         realNumber: 0,
         description: form.description,
         summarize: "",
+        applicant: form.applicant,
         statusCode: 0,
         approvalComment: "",
         clubName: form.clubName,
@@ -341,6 +344,7 @@ const submit = () => {
         realNumber: form.statusCode === 3 ? form.realNumber : 0,
         description: form.description,
         summarize: form.statusCode === 3 ? form.summarize : "",
+        applicant: form.applicant,
         statusCode: 0,
         approvalComment: form.statusCode === 2 ? form.approvalComment : "",
         clubName: form.clubName,
