@@ -2,13 +2,13 @@ export interface FundInfo {
   id?: number
   theme: string
   type: string
-  amount: number
-  surplus: number
+  amount: number | string
+  surplus: number | string
   appropriationTime: string
   statusCode: number
   applicant?: number
   approvalComment?: string
-  clubId: number
+  clubId?: number
   competitionId?: number
   activityId?: number
   clubName?: string

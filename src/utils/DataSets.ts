@@ -28,7 +28,28 @@ export const clubLevel = [
   },
 ];
 
-export const memberJob: string[] = [];
+export const memberJob = [
+  {
+    label: "会长",
+    value: "leader",
+  },
+  {
+    label: "副会长",
+    value: "vice-leader",
+  },
+  {
+    label: "团支书",
+    value: "secretary",
+  },
+  {
+    label: "部长",
+    value: "minister",
+  },
+  {
+    label: "副部长",
+    value: "vice-minister",
+  },
+];
 
 export const activityType = [
   {
@@ -57,20 +78,41 @@ export const activityType = [
   },
 ];
 
-export const shouldApply: string[] = [];
-
 export const fundType = [
   {
     label: "基础经费",
-    value: "basic",
+    value: "基础经费",
   },
   {
     label: "活动经费",
-    value: "activity",
+    value: "活动经费",
   },
   {
     label: "竞赛奖金",
-    value: "competition",
+    value: "竞赛奖金",
+  },
+  {
+    label: "其他",
+    value: "其他",
+  },
+];
+
+export const competitionType = [
+  {
+    label: "科技类",
+    value: "science",
+  },
+  {
+    label: "体育类",
+    value: "sport",
+  },
+  {
+    label: "文化类",
+    value: "culture",
+  },
+  {
+    label: "艺术类",
+    value: "art",
   },
   {
     label: "其他",
@@ -78,11 +120,51 @@ export const fundType = [
   },
 ];
 
-export const competitionType: string[] = [];
+export const competitionLevel = [
+  {
+    label: "院级",
+    value: "department",
+  },
+  {
+    label: "校级",
+    value: "university",
+  },
+  {
+    label: "市级",
+    value: "city",
+  },
+  {
+    label: "省级",
+    value: "province",
+  },
+  {
+    label: "国家级",
+    value: "country",
+  },
+];
 
-export const competitionLevel: string[] = [];
-
-export const award: string[] = [];
+export const award = [
+  {
+    label: "特等奖",
+    value: "special",
+  },
+  {
+    label: "一等奖",
+    value: "first",
+  },
+  {
+    label: "二等奖",
+    value: "second",
+  },
+  {
+    label: "三等奖",
+    value: "third",
+  },
+  {
+    label: "参与奖",
+    value: "participation",
+  },
+];
 
 export const text: string = "请依照武汉科技大学社团创办申请准则，准备好相关附件，并通过下方按钮上传至系统！" + "<br />" +
     "<div style='color: red; font-size: large; font-weight: bold'>注意！！！</div>" +

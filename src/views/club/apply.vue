@@ -74,7 +74,7 @@
           </ElFormItem>
         </ElTabPane>
 <!-- <ElTabPane label="核心成员"></ElTabPane-->
-        <ElTabPane v-if="Number(route.params.aid) === 0" style="height: 320px" label="附件">
+        <ElTabPane v-if="Number(route.params.aid) !== 0" style="height: 320px" label="附件">
           <div v-html="text" />
           <input
             id="uploadAvatar"
@@ -165,7 +165,6 @@ import Editor from "@tinymce/tinymce-vue";
 import { Delete, Upload, Download } from "@element-plus/icons-vue";
 import { files, club } from "@/api";
 import SparkMD5 from "spark-md5";
-import dayjs from "dayjs";
 
 const route = useRoute();
 const router = useRouter();
