@@ -34,6 +34,9 @@ export class useAuthGuard {
           }
           next();
         } else {
+          if (localStorage.getItem("token")) {
+            await store.dispatch('common/getUserInfo');
+          }
           let userInfo: IUserInfo = store.getters['common/userInfo'];
           if (userInfo.userNumber) {
             const isAllowed = this.allowRouter(to, userInfo.permissionList);
