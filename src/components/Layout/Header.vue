@@ -61,6 +61,8 @@ const userInfo: IUserInfo = store.getters['common/userInfo'];
 
 const logout = () => {
   common.logout({ email: userInfo.email });
+  localStorage.setItem("token", "");
+  router.push({ path: "/login" });
 };
 
 const avatarUrl = ref("/image/default-avatar.png");
@@ -68,11 +70,9 @@ const getAvatar = async () => {
   const { data } = await files.researchLogin({ email: userInfo.email });
   if (data.code === 0) {
     const res = await files.picture({ fileName: data.data.fileName });
-    if (res.data.code === 0) {
-      avatarUrl.value = window.URL.createObjectURL(
-          new Blob([res.data], { type: "arraybuffer" })
-      );
-    }
+    avatarUrl.value = window.URL.createObjectURL(
+        new Blob([res.data], { type: "arraybuffer" })
+    );
   }
 };
 

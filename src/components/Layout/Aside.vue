@@ -112,7 +112,10 @@ const filterMenu = (tree: IRouterRecord[]): IRouterRecord[] => {
     const isExist: boolean = permissionList.some((p: IPermission) => {
       const urlList = p.url.split('/');
       if (urlList[3] === "research") {
-        return node.name === urlList[2];
+        if (urlList[2] !== "user")
+          return node.name === urlList[2];
+        else
+          return node.name === urlList[2] && urlList[4] === "basic";
       }
     });
     if (isExist) {

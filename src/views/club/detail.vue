@@ -137,11 +137,9 @@ const getImageList = async () => {
     const fileList: string[] = data.data.filesList;
     for (const fileName of fileList) {
       const res = await files.picture({ fileName: fileName });
-      if (res.data.code === 0) {
-        imageList.value.push(window.URL.createObjectURL(
-            new Blob([res.data], { type: "arraybuffer" })
-        ));
-      }
+      imageList.value.push(window.URL.createObjectURL(
+          new Blob([res.data], { type: "arraybuffer" })
+      ));
     }
   }
 };
@@ -173,11 +171,9 @@ const getMember = async () => {
       let imageSrc: string = "";
       if (res.data.code === 0) {
         const response = await files.picture({ fileName: res.data.data.fileName });
-        if (response.data.code === 0) {
-          imageSrc = window.URL.createObjectURL(
-              new Blob([response.data], { type: "arraybuffer" })
-          );
-        }
+        imageSrc = window.URL.createObjectURL(
+            new Blob([response.data], { type: "arraybuffer" })
+        );
       }
       const memberDetail = [
         {

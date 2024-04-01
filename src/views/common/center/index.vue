@@ -130,27 +130,17 @@ import SparkMD5 from "spark-md5";
 
 const userInfo = store.getters['common/userInfo'];
 
-const userDetail = reactive({
-  realName: "",
-  studentNumber: "",
-  teacherNumber: "",
-  phone: "",
-  email: "",
-  roleName: userInfo.role.roleName,
-} as UserQuery);
-
 const avatarUrl = ref("/image/default-avatar.png");
 const avatarName = ref("");
+const details = ref<any[]>([]);
 const getAvatar = async () => {
   const { data } = await files.researchLogin({ email: userInfo.email });
   if (data.code === 0) {
     avatarName.value = data.data.fileName;
     const res = await files.picture({ fileName: avatarName.value });
-    if (res.data.code === 0) {
-      avatarUrl.value = window.URL.createObjectURL(
-          new Blob([res.data], { type: "arraybuffer" })
-      );
-    }
+    avatarUrl.value = window.URL.createObjectURL(
+        new Blob([res.data], { type: "arraybuffer" })
+    );
   }
 };
 
@@ -201,40 +191,32 @@ const query = async () => {
   const { data } = await user.researchDetail({ email: userInfo.email });
   if (data.code === 0) {
     const loginInfo = data.data.loginInfo;
-    userDetail.realName = loginInfo.realName;
-    userDetail.studentNumber = loginInfo.studentNumber;
-    userDetail.teacherNumber = loginInfo.teacherNumber;
-    userDetail.phone = loginInfo.phone;
-    userDetail.email = loginInfo.email;
+    details.value.push({
+      id: '1',
+      label: '姓名',
+      value: loginInfo.realName,
+      icon: User,
+    });
+    details.value.push({
+      id: '2',
+      label: loginInfo.studentNumber ? '学号' : '工号',
+      value: loginInfo.studentNumber ? loginInfo.studentNumber : loginInfo.teacherNumber,
+      icon: Postcard,
+    });
+    details.value.push({
+      id: '3',
+      label: '手机',
+      value: loginInfo.phone,
+      icon: Iphone,
+    });
+    details.value.push({
+      id: '4',
+      label: '邮箱',
+      value: loginInfo.email,
+      icon: Message,
+    });
   }
 };
-
-const details = [
-  {
-    id: '1',
-    label: '姓名',
-    value: userDetail.realName,
-    icon: User,
-  },
-  {
-    id: '2',
-    label: userDetail.studentNumber ? '学号' : '工号',
-    value: userDetail.studentNumber ? userDetail.studentNumber : userDetail.teacherNumber,
-    icon: Postcard,
-  },
-  {
-    id: '3',
-    label: '手机',
-    value: userDetail.phone,
-    icon: Iphone,
-  },
-  {
-    id: '4',
-    label: '邮箱',
-    value: userDetail.email,
-    icon: Message,
-  },
-];
 
 const passwordLoading = ref(false);
 const passwordForm = reactive({

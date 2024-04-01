@@ -132,11 +132,9 @@ const getImageList = async () => {
     const fileList: string[] = data.data.filesList;
     for (const fileName of fileList) {
       const res = await files.picture({ fileName: fileName });
-      if (res.data.code === 0) {
-        imageList.value.push(window.URL.createObjectURL(
-            new Blob([res.data], { type: "arraybuffer" })
-        ));
-      }
+      imageList.value.push(window.URL.createObjectURL(
+          new Blob([res.data], { type: "arraybuffer" })
+      ));
     }
   }
 };
