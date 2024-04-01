@@ -108,6 +108,40 @@
             </div>
           </template>
         </ElTabPane>
+        <ElTabPane v-if="form.statusCode === 3" style="height: 320px" label="社团照片">
+          <div v-html="imageText" />
+          <input
+            id="uploadImage"
+            type="file"
+            name="file"
+            @change="uploadImage($event)"
+            style="display: none"
+          />
+          <ElButton class="mt-6" type="info" :icon="Upload" plain round @click="clickImageInput">上传</ElButton>
+          <template v-for="imageName in imageList">
+            <div>
+              <span>{{ imageName }}</span>
+              <ElButton
+                class="ml-2"
+                size="small"
+                type="info"
+                :icon="Delete"
+                circle
+                plain
+                @click="deleteImage(imageName)"
+              />
+              <ElButton
+                class="ml-2"
+                size="small"
+                type="info"
+                :icon="Download"
+                circle
+                plain
+                @click="downloadImage(imageName)"
+              />
+            </div>
+          </template>
+        </ElTabPane>
       </ElTabs>
       <ElFormItem v-if="[1, 2].includes(form.statusCode!)" class="mt-6" label="审核批语" prop="approvalComment">
         <ElInput :disabled="form.statusCode === 2" class="w-1/3" type="textarea" v-model.trim="form.approvalComment" placeholder="请输入审核批语" />
@@ -159,7 +193,7 @@ import { ElMessage } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
 import store from "@/store";
 import type { IPermission } from "@/store/models";
-import { clubLevel, clubType, text } from "@/utils/DataSets";
+import {clubLevel, clubType, imageText, text} from "@/utils/DataSets";
 import { apiKey, tinymceConfig } from "@/utils/tinymce";
 import Editor from "@tinymce/tinymce-vue";
 import { Delete, Upload, Download } from "@element-plus/icons-vue";
@@ -176,7 +210,8 @@ userInfo.permissionList.forEach((permission: IPermission) => {
 });
 
 const loading = ref(false);
-const fileList = ref<string[]>([])
+const fileList = ref<string[]>([]);
+const imageList = ref<string[]>([]);
 
 const form = reactive({
   id: Number(route.params.aid) ? Number(route.params.aid) : undefined,
@@ -215,6 +250,10 @@ const rules: FormRules = {
 
 const clickFileInput = () => {
   document.getElementById('uploadAvatar')!.click();
+};
+
+const clickImageInput = () => {
+  document.getElementById('uploadImage')!.click();
 };
 
 const uploadFile = (e) => {
@@ -256,11 +295,58 @@ const uploadFile = (e) => {
   };
 };
 
+const uploadImage = (e) => {
+  const file = e.target.files[0];
+  const fileName: string = e.target.value.split('\\')[2];
+  if (!['png', 'jpg'].includes(fileName.split('.').pop()!)) {
+    e.target.value = '';
+    ElMessage.error("您上传的图片格式不符，请重新上传！");
+    return ;
+  }
+  if (fileName.length > 22) {
+    e.target.value = '';
+    ElMessage.error("您上传的图片名称超过22个字符，请重新上传！");
+    return ;
+  }
+  const size: number = file.size/1024/1024;
+  if (size > 5) {
+    e.target.value = '';
+    ElMessage.error("您上传的图片超过5MB，请重新上传！");
+    return ;
+  }
+  const formData = new FormData();
+  const fileReader = new FileReader();
+  const spark = new SparkMD5();
+  fileReader.readAsBinaryString(file);
+  fileReader.onload = async (element) => {
+    spark.appendBinary(element.target!.result as string);
+    const md5 = spark.end();
+    formData.append("multipartFile", file);
+    formData.append("fileName", fileName);
+    formData.append("id", form.id!.toString());
+    formData.append("type", "club");
+    formData.append("md5Code", md5);
+    const { data } = await files.create(formData);
+    if (data.code === 0) {
+      ElMessage.success("上传成功！");
+      await getImageList();
+    }
+  };
+};
+
 const deleteFile = async (fileName: string) => {
   const { data } = await files.delete({ fileName: fileName });
   if (data.code === 0) {
     ElMessage.success("附件已移除！");
     await getFileList();
+  }
+};
+
+const deleteImage = async (imageName: string) => {
+  const { data } = await files.delete({ fileName: imageName });
+  if (data.code === 0) {
+    ElMessage.success("图片已移除！");
+    await getImageList();
   }
 };
 
@@ -278,10 +364,31 @@ const downloadFile = async (fileName: string) => {
   document.body.removeChild(link);
 };
 
+const downloadImage = async (imageName: string) => {
+  const { data } = await files.download({ fileName: imageName });
+  const url = window.URL.createObjectURL(
+      new Blob([data], { type: "arraybuffer" })
+  );
+  const link = document.createElement("a");
+  link.style.display = "none";
+  link.href = url;
+  link.setAttribute("download", imageName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 const getFileList = async () => {
   const { data } = await files.researchClubFile({ id: form.id! });
   if (data.code === 0) {
     fileList.value = data.data.filesList;
+  }
+};
+
+const getImageList = async () => {
+  const { data } = await files.researchClubImage({ id: form.id! });
+  if (data.code === 0) {
+    imageList.value = data.data.filesList;
   }
 };
 

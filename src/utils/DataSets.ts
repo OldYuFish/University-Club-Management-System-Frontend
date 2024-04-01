@@ -172,4 +172,14 @@ export const text: string = "请依照武汉科技大学社团创办申请准则
     "1> 请保证任一文件扩展名属于以下范畴" +
     "<div style='color: green; font-size: 20px; margin-left: 2em'>.pdf, .doc, .docx, .xls, .xlsx</div>" +
     "2> 请保证任一文件大小不超过" + "<span style='color: blue; font-size: 18px'>5MB</span>" + "<br />" +
-    "3> 请保证任一文件名称（包括扩展名）长度不超过" + "<span style='color: orange; font-size: 18px; font-weight: bold'>22</span>" + "个字符";
+    "3> 请保证任一文件名称（包括扩展名）长度不超过" +
+    "<span style='color: orange; font-size: 18px; font-weight: bold'>22</span>" + "个字符";
+
+export const imageText: string = "您可以在这里上传相关图片，并通过下方按钮上传至系统，用做宣传展示！" + "<br />" +
+    "<div style='color: red; font-size: large; font-weight: bold'>注意！！！</div>" +
+    "上传前务必核查图片参数符合系统规范。图片参数规范如下：" + "<br />" +
+    "1> 请保证任一图片扩展名属于以下范畴" +
+    "<div style='color: green; font-size: 20px; margin-left: 2em'>.jpg, .png</div>" +
+    "2> 请保证任一图片大小不超过" + "<span style='color: blue; font-size: 18px'>5MB</span>" + "<br />" +
+    "3> 请保证任一图片名称（包括扩展名）长度不超过" +
+    "<span style='color: orange; font-size: 18px; font-weight: bold'>22</span>" + "个字符";

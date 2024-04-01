@@ -4,9 +4,16 @@
       <ElRow class="mb-4">
         <ElCol :span="12">
           <ElCarousel style="border-radius: 16px" :interval="3000" direction="vertical" height="300">
-            <ElCarouselItem v-for="image in imageList">
-              <ElImage style="height: 100%; width: 100%" :src="image" />
-            </ElCarouselItem>
+            <template v-if="imageList.length === 0">
+              <ElCarouselItem>
+                <ElImage style="height: 100%; width: 100%" src="/image/default.png" />
+              </ElCarouselItem>
+            </template>
+            <template v-else>
+              <ElCarouselItem v-for="image in imageList">
+                <ElImage style="height: 100%; width: 100%" :src="image" />
+              </ElCarouselItem>
+            </template>
           </ElCarousel>
         </ElCol>
         <ElCol :span="1" />
