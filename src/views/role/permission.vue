@@ -68,7 +68,14 @@ const closeModel = () => {
 
 const update = async () => {
   const checkedKey = treeRef.value!.getCheckedKeys(true);
-  let permissionList: PermissionInfo[] = [];
+  let permissionList: PermissionInfo[] = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+  ];
   checkedKey.forEach((value) => {
     permissionList.push({ id: value as number });
   });
