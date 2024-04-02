@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full rounded bg-white pb-6 px-8">
+  <div class="h-full rounded bg-white py-6 px-8">
     <ElCard v-if="permissionList.includes('/api/activity/research/detail')">
       <ElRow class="mb-4">
         <ElCol :span="12">
@@ -18,7 +18,7 @@
         </ElCol>
         <ElCol :span="1" />
         <ElCol :span="11">
-          <ElDescriptions :column="2" :title="preData.title">
+          <ElDescriptions :column="2" :title="title">
             <template #extra>
               <ElButton
                 v-if="permissionList.includes('/api/activity/update')"
@@ -29,7 +29,7 @@
                 @click="router.push({ path: `/activity/apply/${route.params.id}` })"
               >编辑</ElButton>
             </template>
-            <template v-for="item in data">
+            <template v-for="item in detailData">
               <ElDescriptionsItem v-if="item.value !== ''" :label="item.name+'：'">{{ item.value }}</ElDescriptionsItem>
             </template>
           </ElDescriptions>
@@ -67,63 +67,8 @@ store.getters['common/userInfo'].permissionList.forEach((permission: IPermission
 
 const description = ref("");
 const summarize = ref("");
-
-const preData = reactive({
-  title: "",
-  organizer: "",
-  coOrganizer: "",
-  type: "",
-  address: "",
-  activityStartTime: "",
-  activityEndTime: "",
-  applicationStartTime: "",
-  applicationEndTime: "",
-  numberLimit: "--",
-  realNumber: "--",
-});
-const data: ICardData[] = [
-  {
-    name: "组织者",
-    value: preData.organizer,
-  },
-  {
-    name: "协办方",
-    value: preData.coOrganizer,
-  },
-  {
-    name: "活动类型",
-    value: preData.type,
-  },
-  {
-    name: "活动地点",
-    value: preData.address,
-  },
-  {
-    name: "活动开始时间",
-    value: preData.activityStartTime,
-  },
-  {
-    name: "活动结束时间",
-    value: preData.activityEndTime,
-  },
-  {
-    name: "报名开始时间",
-    value: preData.applicationStartTime,
-  },
-  {
-    name: "报名截止时间",
-    value: preData.applicationEndTime,
-  },
-  {
-    name: "最大人数限制",
-    value: preData.numberLimit,
-  },
-  {
-    name: "实际参与人数",
-    value: preData.realNumber,
-  },
-];
-
+const detailData = ref<ICardData[]>([]);
+const title = ref("");
 const imageList = ref<string[]>([]);
 
 const getImageList = async () => {
@@ -143,19 +88,49 @@ const getDetail = async () => {
   const { data } = await activity.researchDetail({ id: Number(route.params.id) });
   if (data.code === 0) {
     const activityInfo: ActivityInfo = data.data.activityInfo;
-    preData.title = activityInfo.title;
-    preData.organizer = activityInfo.clubName!;
-    preData.coOrganizer = activityInfo.coOrganizer;
-    preData.type = activityInfo.type;
-    preData.address = activityInfo.address;
-    preData.activityStartTime = activityInfo.activityStartTime;
-    preData.activityEndTime = activityInfo.activityEndTime;
+    detailData.value.push({
+      name: "组织者",
+      value: activityInfo.clubName!,
+    });
+    detailData.value.push({
+      name: "协办方",
+      value: activityInfo.coOrganizer,
+    });
+    detailData.value.push({
+      name: "活动类型",
+      value: activityInfo.type,
+    });
+    detailData.value.push({
+      name: "活动地点",
+      value: activityInfo.address,
+    });
+    detailData.value.push({
+      name: "活动开始时间",
+      value: activityInfo.activityStartTime,
+    });
+    detailData.value.push({
+      name: "活动结束时间",
+      value: activityInfo.activityEndTime,
+    });
     if (activityInfo.shouldApply === 1) {
-      preData.applicationStartTime = activityInfo.applicationStartTime!;
-      preData.applicationEndTime = activityInfo.applicationEndTime!;
+      detailData.value.push({
+        name: "报名开始时间",
+        value: activityInfo.applicationStartTime!,
+      });
+      detailData.value.push({
+        name: "报名截止时间",
+        value: activityInfo.applicationEndTime!,
+      });
     }
-    preData.numberLimit = activityInfo.numberLimit ? activityInfo.numberLimit.toString() : "--";
-    preData.realNumber = activityInfo.realNumber ? activityInfo.realNumber.toString() : "--";
+    detailData.value.push({
+      name: "最大人数限制",
+      value: activityInfo.numberLimit ? activityInfo.numberLimit.toString() : "--",
+    });
+    detailData.value.push({
+      name: "实际参与人数",
+      value: activityInfo.realNumber ? activityInfo.realNumber.toString() : "--",
+    });
+    title.value = activityInfo.title;
     description.value = activityInfo.description ? activityInfo.description : "";
     summarize.value = activityInfo.summarize ? activityInfo.summarize : "";
   }

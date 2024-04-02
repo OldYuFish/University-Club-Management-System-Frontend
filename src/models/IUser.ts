@@ -34,7 +34,7 @@ export interface UserTable {
   userNumber: string
   phone: string
   email: string
-  isDelete: number
+  isDelete: number | string
   roleName: string
 }
 

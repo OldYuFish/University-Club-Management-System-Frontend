@@ -62,6 +62,7 @@ import type { IColumn } from "@/models/ITable";
 import type { LogQuery } from "@/models";
 import { log } from "@/api";
 import type { FormInstance, FormRules } from "element-plus";
+import dayjs from "dayjs";
 
 const permissionList = ref<string[]>([]);
 store.getters['common/userInfo'].permissionList.forEach((permission: IPermission) => {
@@ -144,7 +145,15 @@ const query = async () => {
     tableData.loading = true;
     const { data } = await log.research(params);
     if (data.code === 0) {
-      tableData.data = data.data.logList as LogQuery[];
+      const logList: LogQuery[] = data.data.logList;
+      logList.forEach((value) => {
+        tableData.data.push({
+          operateTime: dayjs(value.operateTime).subtract(8, "hour").format("YYYY-MM-DD HH:mm:ss"),
+          object: value.object,
+          operate: value.operate,
+          userNumber: value.userNumber
+        });
+      });
       tableData.pageConfig = data.data.pagination as IPagination;
     }
     tableData.loading = false;

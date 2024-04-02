@@ -177,14 +177,21 @@
             </div>
           </template>
         </ElTabPane>
+        <ElTabPane v-if="[1, 2].includes(form.statusCode!)" label="审核批语">
+          <ElFormItem prop="approvalComment">
+            <Editor
+              :disabled="form.statusCode === 2"
+              v-model="form.approvalComment"
+              :apiKey="apiKey"
+              :init="tinymceConfig.init"
+            />
+          </ElFormItem>
+        </ElTabPane>
       </ElTabs>
-      <ElFormItem v-if="[1, 2].includes(form.statusCode)" class="mt-6" label="审核批语" prop="approvalComment">
-        <ElInput :disabled="form.statusCode === 2" class="w-1/3" type="textarea" v-model.trim="form.approvalComment" placeholder="请输入审核批语" />
-      </ElFormItem>
     </ElForm>
     <ElRow class="mt-4" justify="center">
       <ElButton
-        v-if="Number(route.params.aid) === 0"
+        v-if="form.statusCode === 0"
         :loading="loading"
         class="mx-2"
         type="info"
@@ -483,7 +490,7 @@ const approval = (statusCode: number) => {
       const { data } = await activity.approval(params);
       if (data.code === 0) {
         ElMessage.success("活动申请表审批成功！");
-        await query();
+        await router.push({ path: "/activity/list" });
       }
       loading.value = false;
     }

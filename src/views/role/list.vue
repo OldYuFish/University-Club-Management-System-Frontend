@@ -99,7 +99,7 @@ store.getters['common/userInfo'].permissionList.forEach((permission: IPermission
   permissionList.value.push(permission.url);
 });
 
-const updatePermission = ref(permissionList.value.includes("/api/role/update/Permission"));
+const updatePermission = ref(permissionList.value.includes("/api/role/update/permission"));
 
 const drawerState = reactive({
   showDrawer: false,
@@ -108,11 +108,11 @@ const drawerState = reactive({
 });
 
 const roleName = ref("");
-const filterTableData = computed(() => {
+const filterTableData = computed(() =>
   tableData.data.filter((data) =>
     !roleName.value || data.roleName.includes(roleName.value)
-  );
-});
+  )
+);
 
 const tableData = reactive({
   loading: false,
@@ -194,6 +194,7 @@ const operate = async (type: OptionType, row: RoleInfo, index?: number) => {
           {
             confirmButtonText: "确认",
             cancelButtonText: "取消",
+            confirmButtonClass: "is-plain",
             roundButton: true,
           }
         ).then(async ({ value }) => {

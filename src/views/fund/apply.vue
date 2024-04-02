@@ -159,14 +159,21 @@
             </div>
           </template>
         </ElTabPane>
+        <ElTabPane v-if="[1, 2].includes(form.statusCode!)" label="审核批语">
+          <ElFormItem prop="approvalComment">
+            <Editor
+                :disabled="form.statusCode === 2"
+                v-model="form.approvalComment"
+                :apiKey="apiKey"
+                :init="tinymceConfig.init"
+            />
+          </ElFormItem>
+        </ElTabPane>
       </ElTabs>
-      <ElFormItem v-if="[1, 2].includes(form.statusCode!)" class="mt-6" label="审核批语" prop="approvalComment">
-        <ElInput :disabled="form.statusCode === 2" class="w-1/3" type="textarea" v-model.trim="form.approvalComment" placeholder="请输入审核批语" />
-      </ElFormItem>
     </ElForm>
     <ElRow class="mt-4" justify="center">
       <ElButton
-        v-if="Number(route.params.aid) === 0"
+        v-if="form.statusCode === 0"
         :loading="loading"
         class="mx-2"
         type="info"
@@ -214,6 +221,8 @@ import { fundType, competitionType, competitionLevel, award, text } from "@/util
 import { Delete, Upload, Download } from "@element-plus/icons-vue";
 import { files, fund } from "@/api";
 import SparkMD5 from "spark-md5";
+import {apiKey, tinymceConfig} from "@/utils/tinymce";
+import Editor from "@tinymce/tinymce-vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -485,7 +494,7 @@ const approval = (statusCode: number) => {
       const { data } = await fund.approval(params);
       if (data.code === 0) {
         ElMessage.success("经费申请表审批成功！");
-        await query();
+        await router.push({ path: "/fund/list" });
       }
       loading.value = false;
     }

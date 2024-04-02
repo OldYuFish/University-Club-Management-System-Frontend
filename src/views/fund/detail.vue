@@ -66,7 +66,7 @@ const openModel = async () => {
       },
       {
         name: "拨款时间",
-        value: detailData.appropriationTime,
+        value: detailData.appropriationTime ? detailData.appropriationTime : "--",
       },
     ];
     if (detailData.type === "活动经费") {

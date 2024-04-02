@@ -41,7 +41,7 @@
             @click="operate(OptionType.Update, row)"
           >{{ row.statusCode === 1 ? "审批" : "编辑" }}</ElButton>
           <ElButton
-            v-if="showUpdate"
+            v-if="showDetail"
             class="m-1"
             :icon="Document"
             type="info"

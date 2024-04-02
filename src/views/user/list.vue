@@ -101,7 +101,7 @@ const form = reactive({
   userNumber: "",
   phone: "",
   email: "",
-  isDelete: -1,
+  isDelete: "",
   roleName: "",
 });
 const formRef = ref<FormInstance>();
@@ -119,7 +119,7 @@ const clear = () => {
   form.userNumber = "";
   form.phone = "";
   form.email = "";
-  form.isDelete = -1;
+  form.isDelete = "";
   form.roleName = "";
 };
 
@@ -190,7 +190,7 @@ const query = async () => {
     teacherNumber: form.type === "teacherNumber" ? form.userNumber : "",
     phone: form.phone,
     email: form.email,
-    isDelete: form.isDelete,
+    isDelete: Number(form.isDelete),
     roleName: form.roleName,
     pageIndex: tableData.pageConfig.pageIndex,
     pageSize: tableData.pageConfig.pageSize,
@@ -199,6 +199,7 @@ const query = async () => {
     tableData.loading = true;
     const { data } = await user.researchBasic(params);
     if (data.code === 0) {
+      tableData.data = [];
       const loginList = data.data.loginList as UserQuery[];
       loginList.forEach((value) => {
         tableData.data.push({
@@ -206,7 +207,7 @@ const query = async () => {
           userNumber: value.studentNumber.length > 0 ? value.studentNumber : value.teacherNumber,
           phone: value.phone,
           email: value.email,
-          isDelete: value.isDelete,
+          isDelete: value.isDelete ? "已注销" : "活动中",
           roleName: value.roleName,
         });
       });

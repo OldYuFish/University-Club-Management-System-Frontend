@@ -142,14 +142,21 @@
             </div>
           </template>
         </ElTabPane>
+        <ElTabPane v-if="[1, 2].includes(form.statusCode!)" label="审核批语">
+          <ElFormItem prop="approvalComment">
+            <Editor
+              :disabled="form.statusCode === 2"
+              v-model="form.approvalComment"
+              :apiKey="apiKey"
+              :init="tinymceConfig.init"
+            />
+          </ElFormItem>
+        </ElTabPane>
       </ElTabs>
-      <ElFormItem v-if="[1, 2].includes(form.statusCode!)" class="mt-6" label="审核批语" prop="approvalComment">
-        <ElInput :disabled="form.statusCode === 2" class="w-1/3" type="textarea" v-model.trim="form.approvalComment" placeholder="请输入审核批语" />
-      </ElFormItem>
     </ElForm>
     <ElRow class="mt-4" justify="center">
       <ElButton
-        v-if="Number(route.params.aid) === 0"
+        v-if="form.statusCode === 0"
         :loading="loading"
         class="mx-2"
         type="info"
@@ -280,6 +287,7 @@ const uploadFile = (e) => {
   const spark = new SparkMD5();
   fileReader.readAsBinaryString(file);
   fileReader.onload = async (element) => {
+    console.log(form.id);
     spark.appendBinary(element.target!.result as string);
     const md5 = spark.end();
     formData.append("multipartFile", file);
@@ -459,7 +467,7 @@ const approval = (statusCode: number) => {
       const { data } = await club.approval(params);
       if (data.code === 0) {
         ElMessage.success("社团申请表审批成功！");
-        await query();
+        await router.push({ path: "/club/list" });
       }
       loading.value = false;
     }

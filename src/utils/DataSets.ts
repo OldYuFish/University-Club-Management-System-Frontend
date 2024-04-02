@@ -1,19 +1,19 @@
 export const clubType =[
   {
     label: "科技",
-    value: "science",
+    value: "科技",
   },
   {
     label: "文体",
-    value: "culture",
+    value: "文体",
   },
   {
     label: "社工",
-    value: "society",
+    value: "社工",
   },
   {
     label: "其他",
-    value: "others",
+    value: "其他",
   },
 ];
 
@@ -31,50 +31,50 @@ export const clubLevel = [
 export const memberJob = [
   {
     label: "会长",
-    value: "leader",
+    value: "会长",
   },
   {
     label: "副会长",
-    value: "vice-leader",
+    value: "副会长",
   },
   {
     label: "团支书",
-    value: "secretary",
+    value: "团支书",
   },
   {
     label: "部长",
-    value: "minister",
+    value: "部长",
   },
   {
     label: "副部长",
-    value: "vice-minister",
+    value: "副部长",
   },
 ];
 
 export const activityType = [
   {
     label: "讲座",
-    value: "lecture",
+    value: "讲座",
   },
   {
     label: "竞赛",
-    value: "competition",
+    value: "竞赛",
   },
   {
     label: "会议",
-    value: "meeting",
+    value: "会议",
   },
   {
     label: "公益",
-    value: "commonweal",
+    value: "公益",
   },
   {
     label: "文娱",
-    value: "entertainment",
+    value: "文娱",
   },
   {
     label: "其他",
-    value: "others",
+    value: "其他",
   },
 ];
 
@@ -100,69 +100,69 @@ export const fundType = [
 export const competitionType = [
   {
     label: "科技类",
-    value: "science",
+    value: "科技类",
   },
   {
     label: "体育类",
-    value: "sport",
+    value: "体育类",
   },
   {
     label: "文化类",
-    value: "culture",
+    value: "文化类",
   },
   {
     label: "艺术类",
-    value: "art",
+    value: "艺术类",
   },
   {
     label: "其他",
-    value: "others",
+    value: "其他",
   },
 ];
 
 export const competitionLevel = [
   {
     label: "院级",
-    value: "department",
+    value: "院级",
   },
   {
     label: "校级",
-    value: "university",
+    value: "校级",
   },
   {
     label: "市级",
-    value: "city",
+    value: "市级",
   },
   {
     label: "省级",
-    value: "province",
+    value: "省级",
   },
   {
     label: "国家级",
-    value: "country",
+    value: "国家级",
   },
 ];
 
 export const award = [
   {
     label: "特等奖",
-    value: "special",
+    value: "特等奖",
   },
   {
     label: "一等奖",
-    value: "first",
+    value: "一等奖",
   },
   {
     label: "二等奖",
-    value: "second",
+    value: "二等奖",
   },
   {
     label: "三等奖",
-    value: "third",
+    value: "三等奖",
   },
   {
     label: "参与奖",
-    value: "participation",
+    value: "参与奖",
   },
 ];
 

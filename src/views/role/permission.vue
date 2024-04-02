@@ -1,11 +1,10 @@
 <template>
-  <ElDrawer v-model="_showDrawer" @closed="closeModel" title="权限分配树">
+  <ElDrawer v-model="_showDrawer" @opened="openModel" @closed="closeModel" title="权限分配树">
     <ElTree
       ref="treeRef"
       showCheckbox
       defaultExpandAll
       nodeKey="id"
-      :defaultCheckedKeys="defaultCheckedKeys"
       :data="treeData"
       @check="triggerTreeKeys"
     />
@@ -62,8 +61,13 @@ const _showDrawer = computed({
   set: value => emits('update:showDrawer', value),
 });
 
+const openModel = () => {
+  treeRef.value!.setCheckedKeys(props.defaultCheckedKeys);
+};
+
 const closeModel = () => {
   emits('update:showDrawer', false);
+  treeRef.value!.setCheckedKeys([]);
 };
 
 const update = async () => {

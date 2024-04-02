@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full rounded bg-white pb-6 px-8">
+  <div class="h-full rounded bg-white py-6 px-8">
     <ElCard v-if="permissionList.includes('/api/club/research/detail')">
       <ElRow class="mb-4">
         <ElCol :span="12">
@@ -18,10 +18,11 @@
         </ElCol>
         <ElCol :span="1" />
         <ElCol :span="11">
-          <ElDescriptions :column="2" :title="preData.clubName">
+          <ElDescriptions :column="2" :title="clubName">
             <template #extra>
               <ElButton
                 v-if="permissionList.includes('/api/club/update')"
+                :disabled="statusCode !== 3"
                 :icon="Edit"
                 type="info"
                 plain
@@ -29,7 +30,7 @@
                 @click="router.push({ path: `/club/apply/${route.params.id}` })"
               >编辑</ElButton>
             </template>
-            <template v-for="item in data">
+            <template v-for="item in detailData">
               <ElDescriptionsItem v-if="item.value !== ''" :label="item.name+'：'">{{ item.value }}</ElDescriptionsItem>
             </template>
           </ElDescriptions>
@@ -72,62 +73,9 @@ store.getters['common/userInfo'].permissionList.forEach((permission: IPermission
 
 const description = ref("");
 const cardDataList = ref<any[]>([]);
-
-const preData = reactive({
-  clubName: "",
-  realName: "",
-  studentNumber: "",
-  email: "",
-  membersNumber: "--",
-  type: "",
-  clubLevel: "",
-  department: "",
-  totalFund: "--",
-  surplusFund: "--",
-  establishmentTime: "",
-});
-const data: ICardData[] = [
-  {
-    name: "会长",
-    value: preData.realName,
-  },
-  {
-    name: "学号",
-    value: preData.studentNumber,
-  },
-  {
-    name: "邮箱",
-    value: preData.email,
-  },
-  {
-    name: "社团类型",
-    value: preData.type,
-  },
-  {
-    name: "所属学院",
-    value: preData.department,
-  },
-  {
-    name: "社团等级",
-    value: preData.clubLevel,
-  },
-  {
-    name: "成立时间",
-    value: preData.establishmentTime,
-  },
-  {
-    name: "现有成员数",
-    value: preData.membersNumber,
-  },
-  {
-    name: "经费总额",
-    value: preData.totalFund,
-  },
-  {
-    name: "经费剩余",
-    value: preData.surplusFund,
-  },
-];
+const detailData = ref<ICardData[]>([]);
+const clubName = ref("");
+const statusCode = ref<number>();
 
 const imageList = ref<string[]>([]);
 
@@ -148,17 +96,48 @@ const getDetail = async () => {
   const { data } = await club.researchDetail({ id: Number(route.params.id) });
   if (data.code === 0) {
     const clubInfo: ClubInfo = data.data.clubInfo;
-    preData.clubName = clubInfo.clubName;
-    preData.realName = clubInfo.realName!;
-    preData.studentNumber = clubInfo.studentNumber!;
-    preData.email = clubInfo.email!;
-    preData.membersNumber = clubInfo.membersNumber ? clubInfo.membersNumber.toString() : "--";
-    preData.type = clubInfo.type;
-    preData.clubLevel = clubInfo.clubLevel!;
-    preData.department = clubInfo.department!;
-    preData.totalFund = clubInfo.totalFund ? clubInfo.totalFund.toString() : "--";
-    preData.surplusFund = clubInfo.surplusFund ? clubInfo.surplusFund.toString() : "--";
-    preData.establishmentTime = clubInfo.establishmentTime!
+    detailData.value.push({
+      name: "会长",
+      value: clubInfo.realName!,
+    });
+    detailData.value.push({
+      name: "学号",
+      value: clubInfo.studentNumber!,
+    });
+    detailData.value.push({
+      name: "邮箱",
+      value: clubInfo.email!,
+    });
+    detailData.value.push({
+      name: "社团类型",
+      value: clubInfo.type,
+    });
+    detailData.value.push({
+      name: "所属学院",
+      value: clubInfo.department!,
+    });
+    detailData.value.push({
+      name: "社团等级",
+      value: clubInfo.clubLevel!,
+    });
+    detailData.value.push({
+      name: "成立时间",
+      value: clubInfo.establishmentTime ? clubInfo.establishmentTime : "暂未成立",
+    });
+    detailData.value.push({
+      name: "现有成员数",
+      value: clubInfo.membersNumber ? clubInfo.membersNumber.toString() : "--",
+    });
+    detailData.value.push({
+      name: "经费总额",
+      value: clubInfo.totalFund ? clubInfo.totalFund.toString() : "--",
+    });
+    detailData.value.push({
+      name: "经费剩余",
+      value: clubInfo.surplusFund ? clubInfo.surplusFund.toString() : "--",
+    });
+    clubName.value = clubInfo.clubName;
+    statusCode.value = clubInfo.statusCode;
     description.value = clubInfo.description ? clubInfo.description : "";
   }
 };
@@ -212,5 +191,5 @@ const getMember = async () => {
 
 getImageList();
 getDetail();
-getMember();
+// getMember();
 </script>

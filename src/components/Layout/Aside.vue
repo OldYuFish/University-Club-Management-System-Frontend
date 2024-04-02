@@ -136,5 +136,5 @@ const triggerMenuItem = (el: any, menu: IRouterRecord) => {
 };
 
 if (route.name === 'center') state.defaultActive = '';
-else state.defaultActive = route.meta.relation as string;
+else state.defaultActive = (route.meta.relation as string)[0];
 </script>
