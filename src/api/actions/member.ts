@@ -21,6 +21,12 @@ export const member = {
       data: params,
     })
   },
+  researchDetail: (params: { id: number }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/member/research/detail',
+      data: params,
+    })
+  },
   research: (params: { clubId: number }): AxiosPromise<any> => {
     return axios.request({
       url: '/api/member/research',

@@ -37,7 +37,7 @@
         </ElCol>
       </ElRow>
       <ElTabs type="border-card">
-        <ElCard class="pl-3" :body-style="{ padding: 0 }" :shadow="false">
+        <ElCard class="pl-2 py-2" :body-style="{ padding: 0 }" :shadow="false">
           <ElScrollbar height="250px">
             <ElTabPane label="详细描述">
               <div v-html="description" />
@@ -147,8 +147,8 @@ const getMember = async () => {
   if (data.code === 0) {
     for (const value of data.data.memberList) {
       const res = await files.researchMember({ studentNumber: value.studentNumber });
-      let imageSrc: string = "";
-      if (res.data.code === 0) {
+      let imageSrc: string = "/image/nothing.png";
+      if (res.data.code === 0 && res.data.data.fileName) {
         const response = await files.picture({ fileName: res.data.data.fileName });
         imageSrc = window.URL.createObjectURL(
             new Blob([response.data], { type: "arraybuffer" })
@@ -191,5 +191,5 @@ const getMember = async () => {
 
 getImageList();
 getDetail();
-// getMember();
+getMember();
 </script>

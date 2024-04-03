@@ -73,7 +73,62 @@
             />
           </ElFormItem>
         </ElTabPane>
-<!-- <ElTabPane label="核心成员"></ElTabPane-->
+        <ElTabPane label="核心成员">
+          <ElCard class="pl-2" :body-style="{ padding: '0px'}" shadow="never">
+            <ElRow justify="end">
+              <ElButton
+                v-if="permissionList.includes('/api/club/create')"
+                :disabled="form.statusCode === 1"
+                class="m-4"
+                :icon="Plus"
+                type="info"
+                plain
+                round
+                @click="editMember(0)"
+              >添加</ElButton>
+            </ElRow>
+            <ElScrollbar height="250px">
+              <ElRow>
+                <template v-for="data in cardDataList">
+                  <OFCard
+                    :image="data[0].name"
+                    :title="data[1].name"
+                    :data="data"
+                  >
+                    <template #button>
+                      <input
+                        id="uploadMemberImage"
+                        type="file"
+                        name="file"
+                        @change="uploadMemberImage($event, data[2].name)"
+                        style="display: none"
+                        :multiple="false"
+                      />
+                      <ElTooltip effect="light" placement="bottom">
+                        <template #content>
+                          <div style="color: #545c64">请上传后缀为"jpg/png"，且大小不超过5MB的图片，</div>
+                          <div style="color: #545c64">并保证文件名不超过18个字符</div>
+                        </template>
+                        <ElButton
+                          v-if="form.statusCode !== 1"
+                          :icon="Upload"
+                          link
+                          @click="clickMemberInput"
+                        >上传照片</ElButton>
+                      </ElTooltip>
+                      <ElButton
+                        v-if="form.statusCode !== 1"
+                        :icon="Edit"
+                        link
+                        @click="editMember(data[2].name)"
+                      >编辑</ElButton>
+                    </template>
+                  </OFCard>
+                </template>
+              </ElRow>
+            </ElScrollbar>
+          </ElCard>
+        </ElTabPane>
         <ElTabPane v-if="Number(route.params.aid) !== 0 && form.statusCode !== 3" style="height: 320px" label="附件">
           <div v-html="text" />
           <input
@@ -192,6 +247,12 @@
         @click="approval(2)"
       >驳回</ElButton>
     </ElRow>
+    <OFEditMember
+      v-if="permissionList.includes('/api/club/update') || permissionList.includes('/api/club/create')"
+      v-model:visible="dialogState.visible"
+      :data="dialogState.data"
+      @change="editResult"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -200,12 +261,14 @@ import { ElMessage } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
 import store from "@/store";
 import type { IPermission } from "@/store/models";
-import {clubLevel, clubType, imageText, text} from "@/utils/DataSets";
+import { clubLevel, clubType, imageText, text } from "@/utils/DataSets";
 import { apiKey, tinymceConfig } from "@/utils/tinymce";
 import Editor from "@tinymce/tinymce-vue";
-import { Delete, Upload, Download } from "@element-plus/icons-vue";
-import { files, club } from "@/api";
+import { Delete, Upload, Download, Plus, Edit } from "@element-plus/icons-vue";
+import { files, club, member } from "@/api";
 import SparkMD5 from "spark-md5";
+import OFCard from "@/components/Card/index.vue";
+import OFEditMember from "./editMember.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -219,6 +282,11 @@ userInfo.permissionList.forEach((permission: IPermission) => {
 const loading = ref(false);
 const fileList = ref<string[]>([]);
 const imageList = ref<string[]>([]);
+const cardDataList = ref<any[]>([]);
+const dialogState = reactive({
+  visible: false,
+  data: { id: 0 },
+});
 
 const form = reactive({
   id: Number(route.params.aid) ? Number(route.params.aid) : undefined,
@@ -476,6 +544,59 @@ const approval = (statusCode: number) => {
   });
 };
 
+const editResult = () => {
+  dialogState.visible = false;
+  getMember();
+};
+
+const editMember = (id: number) => {
+  dialogState.data = { id: id };
+  dialogState.visible = true;
+};
+
+const clickMemberInput = () => {
+  document.getElementById('uploadMemberImage')!.click();
+};
+
+const uploadMemberImage = (e, id: number) => {
+  const file = e.target.files[0];
+  const fileName: string = e.target.value.split('\\')[2];
+  if (!['jpg', 'png'].includes(fileName.split('.').pop()!)) {
+    e.target.value = '';
+    ElMessage.error("您上传的文件格式不符，请重新上传！");
+    return ;
+  }
+  if (fileName.length > 22) {
+    e.target.value = '';
+    ElMessage.error("您上传的文件名称超过18个字符，请重新上传！");
+    return ;
+  }
+  const size: number = file.size/1024/1024;
+  if (size > 5) {
+    e.target.value = '';
+    ElMessage.error("您上传的文件超过5MB，请重新上传！");
+    return ;
+  }
+  const formData = new FormData();
+  const fileReader = new FileReader();
+  const spark = new SparkMD5();
+  fileReader.readAsBinaryString(file);
+  fileReader.onload = async (element) => {
+    spark.appendBinary(element.target!.result as string);
+    const md5 = spark.end();
+    formData.append("multipartFile", file);
+    formData.append("fileName", fileName);
+    formData.append("id", id.toString());
+    formData.append("type", "member");
+    formData.append("md5Code", md5);
+    const { data } = await files.create(formData);
+    if (data.code === 0) {
+      ElMessage.success("上传成功！");
+      await getMember();
+    }
+  };
+};
+
 const query = async () => {
   const { data } = await club.researchDetail({ id: Number(route.params.aid) });
   if (data.code === 0) {
@@ -492,7 +613,60 @@ const query = async () => {
   }
 };
 
+const getMember = async () => {
+  const { data } = await member.research({ clubId: Number(route.params.aid) });
+  if (data.code === 0) {
+    cardDataList.value = [];
+    for (const value of data.data.memberList) {
+      const res = await files.researchMember({ studentNumber: value.studentNumber });
+      let imageSrc: string = "/image/nothing.png";
+      if (res.data.code === 0 && res.data.data.fileName) {
+        const response = await files.picture({ fileName: res.data.data.fileName });
+        imageSrc = window.URL.createObjectURL(
+            new Blob([response.data], { type: "arraybuffer" })
+        );
+      }
+      const memberDetail = [
+        {
+          name: imageSrc,
+          value: "",
+        },
+        {
+          name: value.memberName,
+          value: "",
+        },
+        {
+          name: value.id,
+          value: "",
+        },
+        {
+          name: "邮箱",
+          value: value.email,
+        },
+        {
+          name: "学号",
+          value: value.studentNumber,
+        },
+        {
+          name: "院系",
+          value: value.department,
+        },
+        {
+          name: "职务",
+          value: value.job,
+        },
+        {
+          name: "荣誉",
+          value: value.honor,
+        },
+      ];
+      cardDataList.value.push(memberDetail);
+    }
+  }
+};
+
 if (Number(route.params.aid)) {
+  getMember();
   getFileList();
   query();
 }

@@ -7,26 +7,27 @@
         </ElCol>
         <ElCol :span="1" />
         <ElCol :span="13">
-          <ElDescriptions :title="title" :column="2">
+          <ElDescriptions :title="title" :column="1">
             <template #extra>
               <ElButton
-                  v-if="add"
-                  :icon="Plus"
-                  link
-                  @click="props.create"
+                v-if="add"
+                :icon="Plus"
+                link
+                @click="props.create"
               >创建</ElButton>
               <ElButton
-                  v-if="edit"
-                  :icon="Edit"
-                  link
-                  @click="props.update"
+                v-if="edit"
+                :icon="Edit"
+                link
+                @click="props.update"
               >编辑</ElButton>
               <ElButton
-                  v-if="remove"
-                  :icon="Delete"
-                  link
-                  @click="props.delete"
+                v-if="remove"
+                :icon="Delete"
+                link
+                @click="props.delete"
               >删除</ElButton>
+              <slot name="button"></slot>
             </template>
             <template v-for="item in data">
               <ElDescriptionsItem v-if="item.value !== ''" :label="item.name+'：'">

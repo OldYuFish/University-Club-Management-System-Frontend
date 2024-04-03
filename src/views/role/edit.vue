@@ -20,7 +20,7 @@
     </ElForm>
     <template #footer>
       <span>
-        <ElButton @click="closeModel">取 消</ElButton>
+        <ElButton type="info" plain round @click="closeModel">取 消</ElButton>
         <ElButton type="info" plain round @click="submit">保 存</ElButton>
       </span>
     </template>
@@ -92,7 +92,7 @@ const submit = () => {
         ElMessage.success(`${message}成功！`);
       }
     }
-  })
+  });
 };
 </script>
 <style scoped>
