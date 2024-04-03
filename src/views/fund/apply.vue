@@ -124,7 +124,7 @@
           </ElFormItem>
         </ElCol>
       </ElRow>
-      <ElTabs v-if="Number(route.params.aid) !== 0" type="border-card">
+      <ElTabs v-if="Number(route.params.aid) !== 0 && form.statusCode !== 3" type="border-card">
         <ElTabPane style="height: 320px" label="附件">
           <div v-html="text" />
           <input
@@ -134,9 +134,9 @@
             @change="uploadFile($event)"
             style="display: none"
           />
-          <ElButton class="mt-6" type="info" :icon="Upload" plain round @click="clickFileInput">上传</ElButton>
+          <ElButton class="my-3" type="info" :icon="Upload" plain round @click="clickFileInput">上传</ElButton>
           <template v-for="fileName in fileList">
-            <div>
+            <div class="mb-1">
               <span>{{ fileName }}</span>
               <ElButton
                 class="ml-2"
@@ -388,6 +388,7 @@ const uploadFile = (e) => {
     formData.append("md5Code", md5);
     const { data } = await files.create(formData);
     if (data.code === 0) {
+      e.target.value = '';
       ElMessage.success("上传成功！");
       await getFileList();
     }
