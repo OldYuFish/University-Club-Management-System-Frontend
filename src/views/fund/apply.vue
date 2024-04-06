@@ -139,6 +139,7 @@
             <div class="mb-1">
               <span>{{ fileName }}</span>
               <ElButton
+                v-if="form.statusCode !== 1"
                 class="ml-2"
                 size="small"
                 type="info"
