@@ -66,16 +66,28 @@
       <template v-for="tab in tabPaneData">
         <ElTabPane v-if="tab.showTab" :label="tab.tabLabel" :name="tab.tabName">
           <OFTable
-              :loading="tab.loading"
-              :data="tab.data"
-              :pageConfig="tab.pageConfig"
-              :column="tab.column"
-              :showOperation="tab.showDelete || tab.showUpdate || tab.showDetail"
-              :showDelete="tab.showDelete"
-              :showUpdate="tab.showUpdate"
-              :showDetail="tab.showDetail"
-              @pageChange="pageChange"
-          />
+            :loading="tab.loading"
+            :data="tab.data"
+            :pageConfig="tab.pageConfig"
+            :column="tab.column"
+            :showOperation="tab.showDelete || tab.showUpdate || tab.showDetail"
+            :showDelete="tab.showDelete"
+            :showUpdate="tab.showUpdate"
+            :showDetail="tab.showDetail"
+            @pageChange="pageChange"
+          >
+            <template #customButton="{ row }">
+              <ElButton
+                v-if="permissionList.includes('/api/club/approval') && tab.tabName === 'notApproval'"
+                class="m-1"
+                :icon="Download"
+                type="info"
+                plain
+                round
+                @click="download(row.id, row.clubName)"
+              >附件</ElButton>
+            </template>
+          </OFTable>
         </ElTabPane>
       </template>
     </ElTabs>
@@ -84,11 +96,11 @@
 <script lang="ts" setup>
 import store from "@/store";
 import type { IPermission } from "@/store/models";
-import { FolderDelete, Plus, Search } from "@element-plus/icons-vue";
+import { Download, FolderDelete, Plus, Search } from "@element-plus/icons-vue";
 import OFTable from "@/components/Table/index.vue";
 import type { ITable } from "@/models/ITable";
 import type { ClubQuery } from "@/models";
-import { club } from "@/api";
+import {club, files} from "@/api";
 import { clubLevel, clubType } from "@/utils/DataSets";
 import type { FormInstance, FormRules } from "element-plus";
 
@@ -334,6 +346,20 @@ const tabPaneData = reactive([
     showDetail: permissionList.value.includes("/api/club/research/detail"),
   },
 ] as ITable[]);
+
+const download = async (id: number, clubName: string) => {
+  const { data } = await files.zipClub({ clubId: id, clubName: clubName });
+  const url = window.URL.createObjectURL(
+      new Blob([data], { type: "arraybuffer" })
+  );
+  const link = document.createElement("a");
+  link.style.display = "none";
+  link.href = url;
+  link.setAttribute("download", `社团申请材料-${clubName}.zip`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const list2Obj = {
   "beenAccepted": 0,

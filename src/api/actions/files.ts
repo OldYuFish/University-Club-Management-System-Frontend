@@ -73,5 +73,13 @@ export const files = {
       responseType: 'blob',
       params,
     })
+  },
+  zipClub: (params: { clubId: number, clubName: string }): AxiosPromise<any> => {
+    return axios.request({
+      url: '/api/files/zip/club',
+      method: 'get',
+      responseType: 'blob',
+      params,
+    })
   }
 };

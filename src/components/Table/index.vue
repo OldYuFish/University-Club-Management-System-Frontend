@@ -49,7 +49,7 @@
             round
             @click="operate(OptionType.Detail, row)"
           >{{ row.statusCode === 3 ? "详情" : "预览" }}</ElButton>
-          <slot name="customButton" :id="row.id"></slot>
+          <slot name="customButton" :id="row.id" :row="row"></slot>
         </template>
       </ElTableColumn>
     </ElTable>

@@ -66,7 +66,7 @@
             :showDetail="false"
             @pageChange="pageChange"
           >
-            <template #customButton="{ id }">
+            <template #customButton="{ id, row }">
               <ElButton
                 v-if="permissionList.includes('/api/fund/research/detail')"
                 class="m-1"
@@ -76,6 +76,15 @@
                 round
                 @click="showDetail(id)"
               >详情</ElButton>
+              <ElButton
+                v-if="permissionList.includes('/api/fund/approval') && tab.tabName === 'notApproval'"
+                class="m-1"
+                :icon="Download"
+                type="info"
+                plain
+                round
+                @click="download(row.id, row.theme)"
+              >附件</ElButton>
             </template>
           </OFTable>
         </ElTabPane>
@@ -92,12 +101,12 @@
 <script lang="ts" setup>
 import store from "@/store";
 import type { IPermission } from "@/store/models";
-import { Document, FolderDelete, Plus, Search } from "@element-plus/icons-vue";
+import { Document, Download, FolderDelete, Plus, Search } from "@element-plus/icons-vue";
 import OFTable from "@/components/Table/index.vue";
 import OFDetail from "./detail.vue";
 import type { ITable } from "@/models/ITable";
 import type { FundQuery } from "@/models";
-import { fund } from "@/api";
+import { fund, files } from "@/api";
 import { fundType } from "@/utils/DataSets";
 import type { FormInstance, FormRules } from "element-plus";
 
@@ -355,6 +364,20 @@ const tabPaneData = reactive([
     showDetail: permissionList.value.includes("/api/fund/research/detail"),
   },
 ] as ITable[]);
+
+const download = async (id: number, theme: string) => {
+  const { data } = await files.zipFund({ fundId: id, theme: theme });
+  const url = window.URL.createObjectURL(
+      new Blob([data], { type: "arraybuffer" })
+  );
+  const link = document.createElement("a");
+  link.style.display = "none";
+  link.href = url;
+  link.setAttribute("download", `经费申请材料-${theme}.zip`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const list2Obj = {
   "beenAccepted": 0,
