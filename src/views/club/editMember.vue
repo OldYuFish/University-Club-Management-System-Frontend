@@ -23,7 +23,9 @@
           <ElInput v-model.trim="form.department" placeholder="请输入所在院系" />
         </ElFormItem>
         <ElFormItem class="mt-4" label="成员职务" prop="job">
-          <ElInput v-model.trim="form.job" placeholder="请输入成员职务" />
+          <ElSelect v-model.trim="form.job" placeholder="请选择成员职务">
+            <ElOption v-for="job in memberJob" :label="job" :value="job" />
+          </ElSelect>
         </ElFormItem>
         <ElFormItem class="mt-4" label="成员邮箱" prop="email">
           <ElInput v-model.trim="form.email" placeholder="请输入成员邮箱" />
@@ -47,6 +49,7 @@ import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
 import { member } from "@/api";
 import type { MemberInfo } from "@/models";
+import {memberJob} from "@/utils/DataSets";
 
 const props = defineProps({
   visible: {
@@ -95,10 +98,7 @@ const rules: FormRules = {
     { required: true, message: "请填写所在院系", trigger: "blur" },
     { max: 24, message: "所在院系不可超过24个字符", trigger: "blur" },
   ],
-  job: [
-    { required: true, message: "请填写成员职务", trigger: "blur" },
-    { max: 8, message: "成员职务不可超过8个字符", trigger: "blur" },
-  ],
+  job: [{ required: true, message: "请选择成员职务", trigger: "change" }],
   email: [
     {
       pattern:

@@ -34,7 +34,7 @@
               v-model.trim="form.type"
               placeholder="请选择经费类型"
             >
-              <ElOption v-for="option in fundType" :label="option.label" :value="option.value" />
+              <ElOption v-for="type in fundType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
@@ -95,7 +95,7 @@
               v-model.trim="form.competitionBonus!.type"
               placeholder="请选择赛事类型"
             >
-              <ElOption v-for="option in competitionType" :label="option.label" :value="option.value" />
+              <ElOption v-for="type in competitionType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
@@ -107,7 +107,7 @@
               v-model.trim="form.competitionBonus!.competitionLevel"
               placeholder="请选择赛事级别"
             >
-              <ElOption v-for="option in competitionLevel" :label="option.label" :value="option.value" />
+              <ElOption v-for="level in competitionLevel" :label="level" :value="level" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
@@ -119,7 +119,7 @@
               v-model.trim="form.competitionBonus!.award"
               placeholder="请选择所获奖项"
             >
-              <ElOption v-for="option in award" :label="option.label" :value="option.value" />
+              <ElOption v-for="option in award" :label="option" :value="option" />
             </ElSelect>
           </ElFormItem>
         </ElCol>

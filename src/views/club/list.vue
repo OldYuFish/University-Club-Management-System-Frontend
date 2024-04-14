@@ -16,14 +16,14 @@
         <ElCol :span="8">
           <ElFormItem label="社团类型" prop="type">
             <ElSelect class="w-5/6" v-model.trim="form.type" placeholder="请选择社团类型">
-              <ElOption v-for="type in clubType" :label="type.label" :value="type.value" />
+              <ElOption v-for="type in clubType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
         <ElCol :span="8">
           <ElFormItem label="社团级别" prop="clubLevel">
             <ElSelect class="w-5/6" v-model.trim="form.clubLevel" placeholder="请选择社团级别">
-              <ElOption v-for="level in clubLevel" :label="level.label" :value="level.value" />
+              <ElOption v-for="level in clubLevel" :label="level" :value="level" />
             </ElSelect>
           </ElFormItem>
         </ElCol>

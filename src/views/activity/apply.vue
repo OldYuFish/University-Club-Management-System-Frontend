@@ -34,7 +34,7 @@
               v-model.trim="form.type"
               placeholder="请选择活动类型"
             >
-              <ElOption v-for="option in activityType" :label="option.label" :value="option.value" />
+              <ElOption v-for="type in activityType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>

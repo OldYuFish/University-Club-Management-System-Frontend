@@ -1,170 +1,18 @@
-export const clubType =[
-  {
-    label: "科技",
-    value: "科技",
-  },
-  {
-    label: "文体",
-    value: "文体",
-  },
-  {
-    label: "社工",
-    value: "社工",
-  },
-  {
-    label: "其他",
-    value: "其他",
-  },
-];
+export const clubType =["科技", "文体", "社工", "其他"];
 
-export const clubLevel = [
-  {
-    label: "院级",
-    value: "院级",
-  },
-  {
-    label: "校级",
-    value: "校级",
-  },
-];
+export const clubLevel = ["院级", "校级"];
 
-export const memberJob = [
-  {
-    label: "会长",
-    value: "会长",
-  },
-  {
-    label: "副会长",
-    value: "副会长",
-  },
-  {
-    label: "团支书",
-    value: "团支书",
-  },
-  {
-    label: "部长",
-    value: "部长",
-  },
-  {
-    label: "副部长",
-    value: "副部长",
-  },
-];
+export const memberJob = ["会长", "副会长", "团支书", "部长", "副部长"];
 
-export const activityType = [
-  {
-    label: "讲座",
-    value: "讲座",
-  },
-  {
-    label: "竞赛",
-    value: "竞赛",
-  },
-  {
-    label: "会议",
-    value: "会议",
-  },
-  {
-    label: "公益",
-    value: "公益",
-  },
-  {
-    label: "文娱",
-    value: "文娱",
-  },
-  {
-    label: "其他",
-    value: "其他",
-  },
-];
+export const activityType = ["讲座", "竞赛", "会议", "公益", "文娱", "其他"];
 
-export const fundType = [
-  {
-    label: "基础经费",
-    value: "基础经费",
-  },
-  {
-    label: "活动经费",
-    value: "活动经费",
-  },
-  {
-    label: "竞赛奖金",
-    value: "竞赛奖金",
-  },
-  {
-    label: "其他",
-    value: "其他",
-  },
-];
+export const fundType = ["基础经费", "活动经费", "竞赛奖金", "其他"];
 
-export const competitionType = [
-  {
-    label: "科技类",
-    value: "科技类",
-  },
-  {
-    label: "体育类",
-    value: "体育类",
-  },
-  {
-    label: "文化类",
-    value: "文化类",
-  },
-  {
-    label: "艺术类",
-    value: "艺术类",
-  },
-  {
-    label: "其他",
-    value: "其他",
-  },
-];
+export const competitionType = ["科技类", "体育类", "文化类", "艺术类", "其他"];
 
-export const competitionLevel = [
-  {
-    label: "院级",
-    value: "院级",
-  },
-  {
-    label: "校级",
-    value: "校级",
-  },
-  {
-    label: "市级",
-    value: "市级",
-  },
-  {
-    label: "省级",
-    value: "省级",
-  },
-  {
-    label: "国家级",
-    value: "国家级",
-  },
-];
+export const competitionLevel = ["院级", "校级", "市级", "省级", "国家级"];
 
-export const award = [
-  {
-    label: "特等奖",
-    value: "特等奖",
-  },
-  {
-    label: "一等奖",
-    value: "一等奖",
-  },
-  {
-    label: "二等奖",
-    value: "二等奖",
-  },
-  {
-    label: "三等奖",
-    value: "三等奖",
-  },
-  {
-    label: "参与奖",
-    value: "参与奖",
-  },
-];
+export const award = ["特等奖", "一等奖", "二等奖", "三等奖", "参与奖"];
 
 export const text: string = "请依照武汉科技大学社团创办申请准则，准备好相关附件，并通过下方按钮上传至系统！" + "<br />" +
     "<div style='color: red; font-size: large; font-weight: bold'>注意！！！</div>" +

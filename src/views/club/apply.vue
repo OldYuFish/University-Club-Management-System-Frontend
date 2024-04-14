@@ -24,7 +24,7 @@
               v-model.trim="form.type"
               placeholder="请选择社团类型"
             >
-              <ElOption v-for="option in clubType" :label="option.label" :value="option.value" />
+              <ElOption v-for="type in clubType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
@@ -36,7 +36,7 @@
               v-model.trim="form.clubLevel"
               placeholder="请选择社团级别"
             >
-              <ElOption v-for="option in clubLevel" :label="option.label" :value="option.value" />
+              <ElOption v-for="level in clubLevel" :label="level" :value="level" />
             </ElSelect>
           </ElFormItem>
         </ElCol>

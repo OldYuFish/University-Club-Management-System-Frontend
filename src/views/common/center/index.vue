@@ -124,7 +124,6 @@ import type { FormInstance, FormRules } from "element-plus";
 import { Postcard, User, Iphone, Message, Upload, Edit } from "@element-plus/icons-vue";
 import { files, user } from "@/api";
 import store from "@/store";
-import { UserQuery } from "@/models";
 import { ElMessage } from "element-plus";
 import SparkMD5 from "spark-md5";
 

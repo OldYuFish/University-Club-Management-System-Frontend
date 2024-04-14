@@ -21,7 +21,7 @@
         <ElCol :span="6">
           <ElFormItem label="活动类型" prop="type">
             <ElSelect class="w-5/6" v-model.trim="form.type" placeholder="请选择活动类型">
-              <ElOption v-for="type in activityType" :label="type.label" :value="type.value" />
+              <ElOption v-for="type in activityType" :label="type" :value="type" />
             </ElSelect>
           </ElFormItem>
         </ElCol>
