@@ -73,7 +73,7 @@
             />
           </ElFormItem>
         </ElTabPane>
-        <ElTabPane label="核心成员">
+        <ElTabPane v-if="Number(route.params.aid) !== 0" label="核心成员">
           <ElCard class="pl-2" :body-style="{ padding: '0px'}" shadow="never">
             <ElRow justify="end">
               <ElButton
