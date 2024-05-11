@@ -17,7 +17,7 @@
       <ElCol :span="6">
         <ElCard style="background-color: #909399; color: white" class="m-1" header="科技类社团">
           <div style="font-size: x-large; font-weight: bold">
-            总数：{{ clubCount.culture }}
+            总数：{{ clubCount.science }}
           </div>
         </ElCard>
       </ElCol>
